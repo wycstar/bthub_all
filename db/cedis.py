@@ -1,0 +1,26 @@
+#!/usr/bin/env python
+# coding:utf-8
+
+import redis
+import json
+import os
+import sys
+
+
+class RedisManager(object):
+    def __init__(self):
+        self._real_path = os.path.split(os.path.realpath(sys.argv[0]))[0]
+        with open(self._real_path + os.sep + 'config.json') as f:
+            j = json.loads(f.read())
+        self._c = redis.Redis(host=j['redis']['host'],
+                              port=j['redis']['port'],
+                              db=j['redis']['index'])
+
+    def put(self, h):
+        self._c.incr(h)
+
+    def get(self, h):
+        return self._c.get(h)
+
+    def check(self, h):
+        return self._c.exists(h)

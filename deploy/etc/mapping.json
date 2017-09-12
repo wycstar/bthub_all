@@ -1,0 +1,24 @@
+{
+	"_all": {
+		"analyzer": "ik_max_word",
+		"search_analyzer": "ik_max_word",
+		"term_vector": "no",
+		"store": "false"
+	},
+	"properties":{
+		"n":{
+			"type":"text",
+			"store":"false",
+			"term_vector": "with_positions_offsets",
+			"analyzer": "ik_max_word",
+			"search_analyzer": "ik_max_word",
+			"include_in_all": "true"
+		},
+		"f" : {
+			"type" : "object"
+		},
+		"d" : {
+			"type" : "text"
+		}
+	}
+}

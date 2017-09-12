@@ -1,0 +1,17 @@
+{
+	"query": {
+		"match": {
+			"n": {
+				"query": "tokyo hot n0809",
+				"operator":"and"
+			}
+		}
+	},
+	"highlight": {
+		"pre_tags": ["<em>"],
+		"post_tags": ["</em>"],
+		"fields": {
+			"n": {}
+		}
+	}
+}

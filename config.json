@@ -2,36 +2,13 @@
     "redis": {
         "host": "localhost",
         "port": 6379,
-        "index": 0
+        "index": 0,
+        "password": "buNMyTNg1tekBN0o"
     },
     "mongodb": {
+        "host": "localhost",
+        "port": 27017,
         "db": "dht",
         "collection": "hashset"
-    },
-    "search":{
-        "mapping":{
-            "_all": {
-                "analyzer": "ik_max_word",
-                "search_analyzer": "ik_max_word",
-                "term_vector": "no",
-                "store": "false"
-            },
-            "properties":{
-                "n":{
-                    "type":"text",
-                    "store":"false",
-                    "term_vector": "with_positions_offsets",
-                    "analyzer": "ik_max_word",
-                    "search_analyzer": "ik_max_word",
-                    "include_in_all": "true"
-                },
-                "f" : {
-                    "type" : "object"
-                },
-                "d" : {
-                    "type" : "text"
-                }
-            }
-        }
     }
 }

@@ -7,6 +7,10 @@
           <mappings>
             <mapping deploy="/code/bthub" local="$PROJECT_DIR$" web="/" />
           </mappings>
+          <excludedPaths>
+            <excludedPath local="true" path="$PROJECT_DIR$/deploy/deb" />
+            <excludedPath local="true" path="$PROJECT_DIR$/deploy/data" />
+          </excludedPaths>
         </serverdata>
       </paths>
     </serverData>

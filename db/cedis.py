@@ -5,6 +5,7 @@ import redis
 import json
 import os
 import sys
+import time
 
 
 class RedisManager(object):
@@ -14,10 +15,13 @@ class RedisManager(object):
             j = json.loads(f.read())
         self._c = redis.Redis(host=j['redis']['host'],
                               port=j['redis']['port'],
-                              db=j['redis']['index'])
+                              db=j['redis']['index'],
+                              password=j['redis']['password'])
 
     def put(self, h):
-        self._c.incr(h)
+        hd = h + '-' + time.strftime("%Y-%m-%d")
+        if self._c.incr(hd) == 1:
+            self._c.expire(hd, 15 * 24 * 3600)
 
     def get(self, h):
         return self._c.get(h)

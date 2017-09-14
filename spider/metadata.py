@@ -4,17 +4,16 @@
 import socket
 import math
 from struct import pack
-from time import sleep, time, strftime
+from time import sleep, time
 from hashlib import sha1
 import dht
 from bencode import bencode, bdecode
-from db import HASH_QUEUE
-import pickle
+from db import HASH_QUEUE, parse_metadata
+import datetime
 
 BT_PROTOCOL = "BitTorrent protocol"
 BT_MSG_ID = 20
 EXT_HANDSHAKE_ID = 0
-TOTAL_LINKS = 0
 
 def random_id():
     hash = sha1()
@@ -37,31 +36,6 @@ def send_handshake(the_socket, infohash):
     peer_id = random_id()
     packet = bt_header + ext_bytes + infohash + peer_id
     send_packet(the_socket, packet)
-
-
-def parse_metadata(metadata, h):
-    utf8_enable = False
-    files = []
-    try:
-        bare_name = metadata.get('name')
-    except KeyError:
-        bare_name = metadata.get('name.utf-8')
-        utf8_enable = True
-    except:
-        return False
-    if 'files' in metadata:
-        for x in metadata.get('files'):
-            files.append({'n': '/'.join(x.get('path.utf-8' if utf8_enable else 'path')),
-                          'l': x.get('length')})
-    else:
-        files.append({'n': bare_name,
-                      'l': metadata.get('length')})
-    return {
-        'n': bare_name,
-        'f': files,
-        'd': strftime("%Y-%m-%d"),
-        '_id': h
-    }
 
 
 def check_handshake(packet, self_infohash):
@@ -129,7 +103,6 @@ def recvall(the_socket, timeout=5):
 
 
 def download_metadata(address, infohash, timeout=5):
-    global TOTAL_LINKS
     try:
         the_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         the_socket.settimeout(5)
@@ -156,10 +129,10 @@ def download_metadata(address, infohash, timeout=5):
             request_metadata(the_socket, ut_metadata, piece)
             packet = recvall(the_socket, timeout)
             metadata.append(packet[packet.index("ee") + 2:])
-
         metadata = bdecode("".join(metadata))
-        print metadata.get('name')
+        begin = datetime.datetime.now()
         HASH_QUEUE.put(parse_metadata(metadata, infohash.encode('hex')))
+        print 'PUT:{0}'.format(datetime.datetime.now() - begin)
 
     
     except socket.timeout:

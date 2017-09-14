@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <title>BTHUB - 做最好的资源站</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="../static/css/public.css">
-    <link rel="stylesheet" type="text/css" href="../static/css/main.css">
+    <link rel="stylesheet" type="text/css" href={{url_for('static', filename="css/public.css")}}>
+    <link rel="stylesheet" type="text/css" href={{url_for('static', filename="css/main.css")}}>
 </head>
 <body class="main-skin">
     <div class="mask"></div>
@@ -27,12 +27,13 @@
                 </span>
         </section>
         <section id="search">
-            <form action="/s">
+            <form method="POST">
+                {{ form.hidden_tag() }}
                 <fieldset id="search-container">
                     <div id="search-input" class="search-input-skin hover-animation">
-                        <input type="text" name="keyword" id="input" autocomplete="off">
+                        {{ form.keyword(id="input", autocomplete="off") }}
                     </div>
-                    <input type="submit" id="search-button" class="search-button-skin hover-animation" value="搜索">
+                    {{ form.submit(class="search-button-skin hover-animation", id="search-button") }}
                 </fieldset>
             </form>
         </section>

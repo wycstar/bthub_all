@@ -3,7 +3,9 @@
 
 
 class Config(object):
-    pass
+    SECRET_KEY = 'asdghtyu'
+    WTF_CSRF_SECRET_KEY = 'acf1235'
+    WTF_CSRF_ENABLED = True
 
 
 class OnlineConfig(Config):

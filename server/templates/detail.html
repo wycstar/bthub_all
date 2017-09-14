@@ -2,11 +2,11 @@
 <html lang="zh-cn">
 <head>
     <meta charset="UTF-8">
-    <title>Keyword结果详情 - BTHUB</title>
+    <title>{{ keyword }}结果详情 - BTHUB</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="../static/css/public.css">
-    <link rel="stylesheet" type="text/css" href="../static/css/footer.css">
-    <link rel="stylesheet" type="text/css" href="../static/css/detail.css">
+    <link rel="stylesheet" type="text/css" href={{url_for('static', filename="css/public.css")}}>
+    <link rel="stylesheet" type="text/css" href={{url_for('static', filename="css/footer.css")}}>
+    <link rel="stylesheet" type="text/css" href={{url_for('static', filename="css/detail.css")}}>
     <link rel="stylesheet" type="text/css" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdn.bootcss.com/jquery-color/2.1.2/jquery.color.min.js"></script>
@@ -32,15 +32,16 @@
         <section id="top"></section>
         <div id="header">
             <div id="logo-wrapper">
-                <a href="http://www.bthub.me" target="_blank"><img src="../static/img/logo_white.png"/></a>
+                <a href="http://www.bthub.me" target="_blank"><img src={{url_for('static', filename="img/logo_white.png")}}/></a>
             </div>
             <div id="search">
-                <form action="/s">
+                <form method="POST">
+                    {{ query_form.hidden_tag() }}
                     <fieldset id="search-container">
                         <div id="search-input" class="search-input-skin hover-animation">
-                            <input type="text" name="keyword" id="input" autocomplete="off">
+                            {{ query_form.keyword(id="input", autocomplete="off") }}
                         </div>
-                        <input type="submit" id="search-button" class="search-button-skin hover-animation" value="搜索">
+                        {{ query_form.submit(class="search-button-skin hover-animation", id="search-button") }}
                     </fieldset>
                 </form>
             </div>

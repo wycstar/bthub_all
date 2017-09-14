@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ keyword }}的搜索结果 - BTHUB</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href={{url_for('static', filename="css/public.css")}}>
+    <link rel="stylesheet" type="text/css" href={{url_for('static', filename="css/footer.css")}}>
+    <link rel="stylesheet" type="text/css" href={{url_for('static', filename="css/result.css")}}>
+    <link rel="stylesheet" type="text/css" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+    <div id="wrap">
+        <section id="top"></section>
+        <div id="header">
+            <div id="logo-wrapper">
+                <a href="http://www.bthub.me" target="_blank"><img src={{url_for('static', filename="img/logo_white.png")}}/></a>
+            </div>
+            <div id="search">
+                <form method="POST">
+                    {{ query_form.hidden_tag() }}
+                    <fieldset id="search-container">
+                        <div id="search-input" class="search-input-skin hover-animation">
+                            {{ query_form.keyword(id="input", autocomplete="off") }}
+                        </div>
+                        {{ query_form.submit(class="search-button-skin hover-animation", id="search-button") }}
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+
+        {% for message in get_flashed_messages() %}
+            <ul>
+                <li>{{ message }}</li>
+            </ul>
+        {% endfor %}
+
+        <div id="type-selection">
+            <a href="#">相关度</a>
+            <a href="#">创建时间</a>
+            <a href="#">文件大小</a>
+            <a href="#">文件数量</a>
+        </div>
+        <div id="content" class="clearfix">
+            <div id="left-content" class="fl">
+                <div class="num">
+                    为您找到<strong>{{ keyword }}</strong>相关的结果<strong>{{ result_num }}</strong>个，用时<strong>{{ result_time }}s</strong>
+                </div>
+                <div id="result">
+                    {% for x in results %}
+                    <div class="item">
+                        <h2>
+                            {% autoescape false %}
+                            <a href={{ x['url'] }} target="_blank">{{x['name']}}</a>
+                            {% endautoescape %}
+                        </h2>
+                        <ul>
+                            {% for y in x['files'] %}
+                            <li class="clearfix">
+                                <span class="fl">{{ y['n'] }}</span>
+                                <span class="fr">{{ y['l'] }}</span>
+                            </li>
+                            {% endfor %}
+                            {% if x['num'] > 10 %}
+                            <li style="font-size: 22px">...</li>
+                            {% endif %}
+                        </ul>
+                        <p>
+                            文件数量：<span>{{ x['num'] }}</span>
+                            文件大小：<span>{{ x['size'] }}</span>
+                            热度：<span>7</span>
+                            收录时间：<span>{{ x['ctime'] }}</span>
+                            <span class="icon-hidden">
+                                <i class="fa fa-magnet" aria-hidden="true"></i>
+                                <a href={{ x['mag'] }}>复制链接</a>
+                            </span>
+                        </p>
+                    </div>
+                    {% endfor %}
+                    <!--<div class="item">-->
+                        <!--<h2>-->
+                            <!--<a href="#">n0010</a>-->
+                        <!--</h2>-->
+                        <!--<ul>-->
+                            <!--<li><span>n0010.avi</span><span>450.1MB</span></li>-->
+                            <!--<li><span>n0010.avi</span><span>450.1MB</span></li>-->
+                            <!--<li><span>n0010.avi</span><span>450.1MB</span></li>-->
+                        <!--</ul>-->
+                        <!--<p>-->
+                            <!--文件数量：<span>2</span>-->
+                            <!--文件大小：<span>455.3 MB</span>-->
+                            <!--热度：<span>7</span>-->
+                            <!--收录时间：<span>2016-08-02</span>-->
+                            <!--<span class="icon-hidden">-->
+                                <!--<i class="fa fa-magnet" aria-hidden="true"></i>-->
+                                <!--<a>复制链接</a>-->
+                            <!--</span>-->
+                        <!--</p>-->
+                    <!--</div>-->
+                    <!--<div class="item">-->
+                        <!--<h2>-->
+                            <!--<a href="#">n0010</a>-->
+                        <!--</h2>-->
+                        <!--<ul>-->
+                            <!--<li><span>n0010.avi</span><span>450.1MB</span></li>-->
+                            <!--<li><span>n0010.avi</span><span>450.1MB</span></li>-->
+                            <!--<li><span>n0010.avi</span><span>450.1MB</span></li>-->
+                        <!--</ul>-->
+                        <!--<p>文件数量：<span>2</span>文件大小：<span>455.3 MB</span>热度：<span>7</span>收录时间：<span>2016-08-02</span>-->
+                            <!--<span class="icon-hidden"><i class="fa fa-magnet" aria-hidden="true"></i><a>复制链接</a></span></p>-->
+                    <!--</div>-->
+                    <!--<div class="item">-->
+                        <!--<h2>-->
+                            <!--<a href="#">n0010</a>-->
+                        <!--</h2>-->
+                        <!--<ul>-->
+                            <!--<li><span>n0010.avi</span><span>450.1MB</span></li>-->
+                            <!--<li><span>n0010.avi</span><span>450.1MB</span></li>-->
+                            <!--<li><span>n0010.avi</span><span>450.1MB</span></li>-->
+                        <!--</ul>-->
+                        <!--<p>文件数量：<span>2</span>文件大小：<span>455.3 MB</span>热度：<span>7</span>收录时间：<span>2016-08-02</span>-->
+                            <!--<span class="icon-hidden"><i class="fa fa-magnet" aria-hidden="true"></i><a>复制链接</a></span></p>-->
+                    <!--</div>-->
+                    <!--<div class="item">-->
+                        <!--<h2>-->
+                            <!--<a href="#">n0010</a>-->
+                        <!--</h2>-->
+                        <!--<ul>-->
+                            <!--<li><span>n0010.avi</span><span>450.1MB</span></li>-->
+                            <!--<li><span>n0010.avi</span><span>450.1MB</span></li>-->
+                            <!--<li><span>n0010.avi</span><span>450.1MB</span></li>-->
+                        <!--</ul>-->
+                        <!--<p>文件数量：<span>2</span>文件大小：<span>455.3 MB</span>热度：<span>7</span>收录时间：<span>2016-08-02</span>-->
+                            <!--<span class="icon-hidden"><i class="fa fa-magnet" aria-hidden="true"></i><a>复制链接</a></span></p>-->
+                    <!--</div>-->
+                    <!--<div class="item">-->
+                        <!--<h2>-->
+                            <!--<a href="#">n0010</a>-->
+                        <!--</h2>-->
+                        <!--<ul>-->
+                            <!--<li><span>n0010.avi</span><span>450.1MB</span></li>-->
+                            <!--<li><span>n0010.avi</span><span>450.1MB</span></li>-->
+                            <!--<li><span>n0010.avi</span><span>450.1MB</span></li>-->
+                        <!--</ul>-->
+                        <!--<p>文件数量：<span>2</span>文件大小：<span>455.3 MB</span>热度：<span>7</span>收录时间：<span>2016-08-02</span>-->
+                            <!--<span class="icon-hidden"><i class="fa fa-magnet" aria-hidden="true"></i><a>复制链接</a></span></p>-->
+                    <!--</div>-->
+                    <!--<div class="item">-->
+                        <!--<h2>-->
+                            <!--<a href="#">n0010</a>-->
+                        <!--</h2>-->
+                        <!--<ul>-->
+                            <!--<li><span>n0010.avi</span><span>450.1MB</span></li>-->
+                            <!--<li><span>n0010.avi</span><span>450.1MB</span></li>-->
+                            <!--<li><span>n0010.avi</span><span>450.1MB</span></li>-->
+                        <!--</ul>-->
+                        <!--<p>文件数量：<span>2</span>文件大小：<span>455.3 MB</span>热度：<span>7</span>收录时间：<span>2016-08-02</span>-->
+                            <!--<span class="icon-hidden"><i class="fa fa-magnet" aria-hidden="true"></i><a>复制链接</a></span></p>-->
+                    <!--</div>-->
+                    <!--<div class="item">-->
+                        <!--<h2>-->
+                            <!--<a href="#">n0010</a>-->
+                        <!--</h2>-->
+                        <!--<ul>-->
+                            <!--<li><span>n0010.avi</span><span>450.1MB</span></li>-->
+                            <!--<li><span>n0010.avi</span><span>450.1MB</span></li>-->
+                            <!--<li><span>n0010.avi</span><span>450.1MB</span></li>-->
+                        <!--</ul>-->
+                        <!--<p>文件数量：<span>2</span>文件大小：<span>455.3 MB</span>热度：<span>7</span>收录时间：<span>2016-08-02</span>-->
+                            <!--<span class="icon-hidden"><i class="fa fa-magnet" aria-hidden="true"></i><a>复制链接</a></span></p>-->
+                    <!--</div>-->
+                    <!--<div class="item">-->
+                        <!--<h2>-->
+                            <!--<a href="#">n0010</a>-->
+                        <!--</h2>-->
+                        <!--<ul>-->
+                            <!--<li><span>n0010.avi</span><span>450.1MB</span></li>-->
+                            <!--<li><span>n0010.avi</span><span>450.1MB</span></li>-->
+                            <!--<li><span>n0010.avi</span><span>450.1MB</span></li>-->
+                        <!--</ul>-->
+                        <!--<p>文件数量：<span>2</span>文件大小：<span>455.3 MB</span>热度：<span>7</span>收录时间：<span>2016-08-02</span>-->
+                            <!--<span class="icon-hidden"><i class="fa fa-magnet" aria-hidden="true"></i><a>复制链接</a></span></p>-->
+                    <!--</div>-->
+                    <!--<div class="item">-->
+                        <!--<h2>-->
+                            <!--<a href="#">n0010</a>-->
+                        <!--</h2>-->
+                        <!--<ul>-->
+                            <!--<li><span>n0010.avi</span><span>450.1MB</span></li>-->
+                            <!--<li><span>n0010.avi</span><span>450.1MB</span></li>-->
+                            <!--<li><span>n0010.avi</span><span>450.1MB</span></li>-->
+                        <!--</ul>-->
+                        <!--<p>文件数量：<span>2</span>文件大小：<span>455.3 MB</span>热度：<span>7</span>收录时间：<span>2016-08-02</span>-->
+                            <!--<span class="icon-hidden"><i class="fa fa-magnet" aria-hidden="true"></i><a>复制链接</a></span></p>-->
+                    <!--</div>-->
+                    <!--<div class="item">-->
+                        <!--<h2>-->
+                            <!--<a href="#">n0010</a>-->
+                        <!--</h2>-->
+                        <!--<ul>-->
+                            <!--<li><span>n0010.avi</span><span>450.1MB</span></li>-->
+                            <!--<li><span>n0010.avi</span><span>450.1MB</span></li>-->
+                            <!--<li><span>n0010.avi</span><span>450.1MB</span></li>-->
+                        <!--</ul>-->
+                        <!--<p>文件数量：<span>2</span>文件大小：<span>455.3 MB</span>热度：<span>7</span>收录时间：<span>2016-08-02</span>-->
+                            <!--<span class="icon-hidden"><i class="fa fa-magnet" aria-hidden="true"></i><a>复制链接</a></span></p>-->
+                    <!--</div>-->
+                </div>
+                <div id="page">
+                    <a class="current-page">1</a>
+                    <a class="other-page">2</a>
+                    <a class="other-page">3</a>
+                    <a class="other-page">4</a>
+                    <a class="other-page">5</a>
+                    <a class="other-page">6</a>
+                    <a class="other-page">7</a>
+                    <a class="other-page">8</a>
+                    <a class="other-page">9</a>
+                    <a class="other-page">10</a>
+                    <a class="next-page"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+                </div>
+            </div>
+            <div id="right-content" class="fr">
+                <div id="hot-search">
+                    <h3>大家都在搜</h3>
+                    <ul>
+                        <li class="clearfix">
+                            <a class="hot-keyword">coat ryo</a>
+                            <span><i class="fa fa-clock-o" aria-hidden="true"></i>18 分钟前</span>
+                        </li>
+                        <li class="clearfix">
+                            <a class="hot-keyword">keyword1</a>
+                            <span><i class="fa fa-clock-o" aria-hidden="true"></i>18 分钟前</span>
+                        </li>
+                        <li class="clearfix">
+                            <a class="hot-keyword">keyword1</a>
+                            <span><i class="fa fa-clock-o" aria-hidden="true"></i>18 分钟前</span>
+                        </li>
+                        <li class="clearfix">
+                            <a class="hot-keyword">keyword1</a>
+                            <span><i class="fa fa-clock-o" aria-hidden="true"></i>18 分钟前</span>
+                        </li>
+                        <li class="clearfix">
+                            <a class="hot-keyword">keyword1</a>
+                            <span><i class="fa fa-clock-o" aria-hidden="true"></i>18 分钟前</span>
+                        </li>
+                        <li class="clearfix">
+                            <a class="hot-keyword">肖申克的救赎</a>
+                            <span><i class="fa fa-clock-o" aria-hidden="true"></i>18 分钟前</span>
+                        </li>
+                        <li class="clearfix">
+                            <a class="hot-keyword">肖申克的救赎</a>
+                            <span><i class="fa fa-clock-o" aria-hidden="true"></i>18 分钟前</span>
+                        </li>
+                        <li class="clearfix">
+                            <a class="hot-keyword">肖申克的救赎</a>
+                            <span><i class="fa fa-clock-o" aria-hidden="true"></i>18 分钟前</span>
+                        </li>
+                        <li class="clearfix">
+                            <a class="hot-keyword">肖申克的救赎</a>
+                            <span><i class="fa fa-clock-o" aria-hidden="true"></i>18 分钟前</span>
+                        </li>
+                        <li class="clearfix">
+                            <a class="hot-keyword">肖申克的救赎</a>
+                            <span><i class="fa fa-clock-o" aria-hidden="true"></i>18 分钟前</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div id="foot">
+            <div class="footer-container">
+                <div class="clearfix">
+                    <div class="rights fl">Copyright © 2016 <strong>BTHUB.ME</strong>. All rights reserved.</div>
+                    <div class="privacy fr">
+                        <a>隐私</a>
+                        <a>版权</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom"></div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            var page = $("#page");
+            var item = $(".item");
+            var type = $("#type-selection");
+            type.children("a:first").addClass("type-selection-selected");
+            type.children("a").click(
+                function () {
+                    $("#type-selection").children("a").removeClass("type-selection-selected");
+                    $(this).addClass("type-selection-selected")
+                }
+            );
+            item.mouseover(function () {
+                $(this).addClass("item-hover");
+                $(this).children("p").children("span:last").addClass("icon-show")
+            });
+            item.mouseleave(function () {
+                $(this).removeClass("item-hover");
+                $(".icon-show").removeClass("icon-show")
+            });
+        })
+
+    </script>
+</body>
+</html>

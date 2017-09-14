@@ -28,3 +28,6 @@ class RedisManager(object):
 
     def check(self, h):
         return self._c.exists(h)
+
+    def count(self):
+        return len(self._c.keys())

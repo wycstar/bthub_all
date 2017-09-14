@@ -10,6 +10,30 @@
           <option name="port" value="22" />
         </fileTransfer>
       </webServer>
+      <webServer id="3abd8b10-0bd4-4646-9966-77efe98c6f66" name="Office" url="http://10.0.0.42">
+        <fileTransfer host="10.0.0.42" port="22" rootFolder="/home/wyc" accessType="SFTP">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+      <webServer id="3634c7ff-f3da-4fdc-ab95-34e8f9ac1d40" name="Aliyun" url="http://118.190.98.248">
+        <fileTransfer host="118.190.98.248" port="22" rootFolder="/home/wyc" accessType="SFTP">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+      <webServer id="ef307ac1-88dc-47c5-baae-3bf80f49996f" name="VM2_IPHONE" url="http://172.20.10.10">
+        <fileTransfer host="172.20.10.10" port="22" rootFolder="/home/wyc" accessType="SFTP">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
     </option>
   </component>
 </project>

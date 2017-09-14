@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" autoUpload="Always" serverName="Linode2">
+  <component name="PublishConfigData" autoUpload="Always" serverName="VM2_IPHONE">
     <serverData>
+      <paths name="Aliyun">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/code/bthub" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
       <paths name="Linode2">
         <serverdata>
           <mappings>
@@ -11,6 +18,20 @@
             <excludedPath local="true" path="$PROJECT_DIR$/deploy/deb" />
             <excludedPath local="true" path="$PROJECT_DIR$/deploy/data" />
           </excludedPaths>
+        </serverdata>
+      </paths>
+      <paths name="Office">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/code/python/bthub" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="VM2_IPHONE">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/bthub" local="$PROJECT_DIR$" web="/" />
+          </mappings>
         </serverdata>
       </paths>
     </serverData>

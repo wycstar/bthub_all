@@ -30,7 +30,8 @@ def search_result(keyword, page_num):
                             result_num=r.get('total') if r is not None else 0,
                             result_time=r.get('took') if r is not None else 0,
                             results=r.get('result') if r is not None else 0,
-                            current_page=page_num)
+                            current_page=page_num,
+                            sort_type=1)
 #                            zhihu_results=c.zhihu_result,
 #                            current_page=page_num,
 #                            query_form=query_form)

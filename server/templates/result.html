@@ -37,22 +37,40 @@
         {% endfor %}
 
         <div id="type-selection">
-            <a href={{ ['/s/', keyword, '/', current_page]|join('') }}>
+            <a href={{ ['/s/', keyword, '/', current_page]|join('') }}
+            {% if sort_type ==  0 %}
+                class="asdf"
+            {% endif %}>
                 相关度
             </a>
-            <a href={{ ['/s/', keyword, '/', current_page, '?sort=heat']|join('') }}>
+            <a href={{ ['/s/', keyword, '/', current_page, '?sort=heat']|join('') }}
+            {% if sort_type ==  1 %}
+                class="type-selection-selected"
+            {% endif %}>
                 流行度
             </a>
-            <a href={{ ['/s/', keyword, '/', current_page, '?sort=ctime']|join('') }}>
+            <a href={{ ['/s/', keyword, '/', current_page, '?sort=ctime']|join('') }}
+            {% if sort_type ==  2 %}
+                class="type-selection-selected"
+            {% endif %}>
                 创建时间
             </a>
-            <a href={{ ['/s/', keyword, '/', current_page, '?sort=atime']|join('') }}>
+            <a href={{ ['/s/', keyword, '/', current_page, '?sort=atime']|join('') }}
+            {% if sort_type ==  3 %}
+                class="type-selection-selected"
+            {% endif %}>
                 最近下载
             </a>
-            <a href={{ ['/s/', keyword, '/', current_page, '?sort=size']|join('') }}>
+            <a href={{ ['/s/', keyword, '/', current_page, '?sort=size']|join('') }}
+            {% if sort_type ==  4 %}
+                class="type-selection-selected"
+            {% endif %}>
                 文件大小
             </a>
-            <a href={{ ['/s/', keyword, '/', current_page, '?sort=file']|join('') }}>
+            <a href={{ ['/s/', keyword, '/', current_page, '?sort=file']|join('') }}
+            {% if sort_type ==  5 %}
+                class="type-selection-selected"
+            {% endif %}>
                 文件数量
             </a>
             <!--<a href="#">相关度</a>-->
@@ -306,14 +324,6 @@
         $(function () {
             var page = $("#page");
             var item = $(".item");
-            var type = $("#type-selection");
-            type.children("a:first").addClass("type-selection-selected");
-            type.children("a").click(
-                function () {
-                    $("#type-selection").children("a").removeClass("type-selection-selected");
-                    $(this).addClass("type-selection-selected")
-                }
-            );
             item.mouseover(function () {
                 $(this).addClass("item-hover");
                 $(this).children("p").children("span:last").addClass("icon-show")

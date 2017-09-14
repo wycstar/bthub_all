@@ -37,10 +37,30 @@
         {% endfor %}
 
         <div id="type-selection">
-            <a href="#">相关度</a>
-            <a href="#">创建时间</a>
-            <a href="#">文件大小</a>
-            <a href="#">文件数量</a>
+            <a href={{ ['/s/', keyword, '/', current_page]|join('') }}>
+                相关度
+            </a>
+            <a href={{ ['/s/', keyword, '/', current_page, '?sort=heat']|join('') }}>
+                流行度
+            </a>
+            <a href={{ ['/s/', keyword, '/', current_page, '?sort=ctime']|join('') }}>
+                创建时间
+            </a>
+            <a href={{ ['/s/', keyword, '/', current_page, '?sort=atime']|join('') }}>
+                最近下载
+            </a>
+            <a href={{ ['/s/', keyword, '/', current_page, '?sort=size']|join('') }}>
+                文件大小
+            </a>
+            <a href={{ ['/s/', keyword, '/', current_page, '?sort=file']|join('') }}>
+                文件数量
+            </a>
+            <!--<a href="#">相关度</a>-->
+            <!--<a href="#">流行度</a>-->
+            <!--<a href="#">创建时间</a>-->
+            <!--<a href="#">最近下载</a>-->
+            <!--<a href="#">文件大小</a>-->
+            <!--<a href="#">文件数量</a>-->
         </div>
         <div id="content" class="clearfix">
             <div id="left-content" class="fl">

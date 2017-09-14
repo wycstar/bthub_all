@@ -86,8 +86,9 @@ class SearchManager(object):
         q = sorted(f, key=lambda k:k['l'], reverse=True)
         for x in q:
             s += x.get('l')
+            b = x.get('n').strip()
             n.append({
-                'n': x.get('n'),
+                'n': b if b != '' else 'UNNAMED',
                 'l': convert_readable_size(x.get('l'))
             })
         return n[:10], convert_readable_size(s)

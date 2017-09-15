@@ -1,8 +1,7 @@
 #wrap{
-    display: block;
     position: relative;
     min-width: 1150px;
-    min-height: 500px;
+    min-height: 100%;
 }
 
 #top{
@@ -161,7 +160,7 @@
 
 #content{
     width: 1150px;
-    margin: 115px 0 30px 110px;
+    padding: 115px 0 30px 110px;
     background-color: white;
 }
 

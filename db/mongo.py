@@ -42,3 +42,6 @@ class MongoManager(object):
 
     def get(self, h):
         return self._c.find_one({'_id': h})
+
+    def count(self):
+        return self._c.find().count()

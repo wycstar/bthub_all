@@ -3,7 +3,7 @@
 
 from spider import Master
 from spider import DHTServer
-from db import DataProcess
+from db import DataProcess, REDIS
 from server import SITE
 
 

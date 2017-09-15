@@ -2,7 +2,7 @@
 # coding=utf-8
 
 from form import TextQueryInput
-from flask import url_for, render_template, redirect, flash
+from flask import url_for, render_template, redirect, request
 from server import SITE
 from server import ELASTIC
 
@@ -17,24 +17,18 @@ def index():
 
 @SITE.route('/s/<keyword>/<int:page_num>', methods=['GET', 'POST'])
 def search_result(keyword, page_num):
-     r = ELASTIC.search(keyword, page_num)
-     if r is None:
-         flash(u'asdfasdfasdf')
-     print r
-     query_form = TextQueryInput()
-     if query_form.validate_on_submit():
-         return redirect(url_for('search_result', keyword=query_form.keyword.data, page_num=1))
-     return render_template('result.html',
+    query_form = TextQueryInput()
+    r = ELASTIC.search(keyword, page_num)
+    if query_form.validate_on_submit():
+     return redirect(url_for('search_result', keyword=query_form.keyword.data, page_num=1))
+    return render_template('result.html',
                             query_form=query_form,
                             keyword=keyword,
                             result_num=r.get('total') if r is not None else 0,
                             result_time=r.get('took') if r is not None else 0,
-                            results=r.get('result') if r is not None else 0,
+                            results=r.get('result') if r is not None else [],
                             current_page=page_num,
-                            sort_type=1)
-#                            zhihu_results=c.zhihu_result,
-#                            current_page=page_num,
-#                            query_form=query_form)
+                            sort_type=request.args.get('sort'))
 
 
 @SITE.route('/hash/<h>', methods=['GET'])

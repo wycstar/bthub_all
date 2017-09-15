@@ -6,6 +6,7 @@ import json
 import os
 import sys
 from tools import convert_readable_size
+from db import REDIS
 
 '''
 type:
@@ -20,57 +21,11 @@ type:
 8: 下载量正序
 9: 下载量逆序
 '''
-SEARCH_TYPE = []
-SEARCH_TYPE.append({
-    "sort": [
-        {"_score": "asc"}
-    ]
-})
-SEARCH_TYPE.append({
-    "sort": [
-        {"_score": "desc"}
-    ]
-})
-SEARCH_TYPE.append({
-    "sort": [
-        {"m": "asc"}
-    ]
-})
-SEARCH_TYPE.append({
-    "sort": [
-        {"m": "desc"}
-    ]
-})
-SEARCH_TYPE.append({
-    "sort": [
-        {"l": "asc"}
-    ]
-})
-SEARCH_TYPE.append({
-    "sort": [
-        {"l": "desc"}
-    ]
-})
-SEARCH_TYPE.append({
-    "sort": [
-        {"s": "asc"}
-    ]
-})
-SEARCH_TYPE.append({
-    "sort": [
-        {"s": "desc"}
-    ]
-})
-SEARCH_TYPE.append({
-    "sort": [
-        {"c": "asc"}
-    ]
-})
-SEARCH_TYPE.append({
-    "sort": [
-        {"c": "desc"}
-    ]
-})
+SEARCH_TYPE = [{"sort": [{"_score": "asc"}]}, {"sort": [{"_score": "desc"}]},
+               {"sort": [{"m": "asc"}]}, {"sort": [{"m": "desc"}]},
+               {"sort": [{"l": "asc"}]}, {"sort": [{"l": "desc"}]},
+               {"sort": [{"s": "asc"}]}, {"sort": [{"s": "desc"}]},
+               {"sort": [{"c": "asc"}]}, {"sort": [{"c": "desc"}]}]
 
 
 class SearchManager(object):
@@ -95,30 +50,32 @@ class SearchManager(object):
 
     def search(self, keyword, page, sort=0):
         k = []
-        search_format = {
-            "from": (page - 1) * 10,
-            "size": 10,
-            "query": {
-                "match": {
-                    "n": {
-                        "query": keyword,
-                        "operator": "and"
+        r = REDIS.get_cache(keyword)
+        if r is None:
+            search_format = {
+                "from": (page - 1) * 10,
+                "size": 10,
+                "query": {
+                    "match": {
+                        "n": {
+                            "query": keyword,
+                            "operator": "and"
+                        }
+                    }
+                },
+                "highlight": {
+                    "pre_tags": ["<em>"],
+                    "post_tags": ["</em>"],
+                    "fields": {
+                        "n": {}
                     }
                 }
-            },
-            "highlight": {
-                "pre_tags": ["<em>"],
-                "post_tags": ["</em>"],
-                "fields": {
-                    "n": {}
-                }
             }
-        }
-        search_format.update(SEARCH_TYPE[sort])
-        print search_format
-        r = requests.post(self._url,
-                          data=json.dumps(search_format),
-                          headers={'Content-type': 'application/json'}).content
+            search_format.update(SEARCH_TYPE[sort])
+            r = requests.post(self._url,
+                              data=json.dumps(search_format),
+                              headers={'Content-type': 'application/json'}).content
+            REDIS.put_cache(keyword, r)
         try:
             j = json.loads(r)
         except:
@@ -133,7 +90,7 @@ class SearchManager(object):
                 'size': r[1],
                 'num': len(r[0]),
                 'mag': 'magnet:?xt=urn:btih:' + x.get('_id'),
-                'url': 'http://172.20.10.10:8000/hash/' + x.get('_id')
+                'url': 'http://10.0.0.42:8000/hash/' + x.get('_id')
             })
         return {
             'total': j.get('hits').get('total'),

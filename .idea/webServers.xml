@@ -34,6 +34,14 @@
           <option name="port" value="22" />
         </fileTransfer>
       </webServer>
+      <webServer id="9bbbd8f0-ef82-43ce-8b31-a603e1d27a46" name="VM2" url="http://10.0.0.11">
+        <fileTransfer host="10.0.0.11" port="22" rootFolder="/home/wyc" accessType="SFTP">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
     </option>
   </component>
 </project>

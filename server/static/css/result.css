@@ -207,7 +207,8 @@
 }
 
 .item ul li span{
-    max-width: 600px;
+    max-width: 630px;
+    text-overflow : ellipsis;
     overflow: hidden;
     white-space: nowrap;
 }

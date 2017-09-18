@@ -14,5 +14,6 @@
         "port": 27017,
         "db": "test",
         "collection": "test"
-    }
+    },
+    "domain":"10.0.0.42"
 }

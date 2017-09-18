@@ -42,6 +42,14 @@
           <option name="port" value="22" />
         </fileTransfer>
       </webServer>
+      <webServer id="29fe7d75-40e8-4ea1-9854-b39caf6aae5f" name="MAC" url="http://wzryhw.mynetgear.com">
+        <fileTransfer host="wzryhw.mynetgear.com" port="10022" rootFolder="/home/wyc" accessType="SFTP">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="10022" />
+        </fileTransfer>
+      </webServer>
     </option>
   </component>
 </project>

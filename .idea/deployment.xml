@@ -20,6 +20,13 @@
           </excludedPaths>
         </serverdata>
       </paths>
+      <paths name="MAC">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/code/python/bthub" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
       <paths name="Office">
         <serverdata>
           <mappings>

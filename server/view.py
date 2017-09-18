@@ -22,13 +22,15 @@ def search_result(keyword, page_num):
     if query_form.validate_on_submit():
      return redirect(url_for('search_result', keyword=query_form.keyword.data, page_num=1))
     return render_template('result.html',
-                            query_form=query_form,
-                            keyword=keyword,
-                            result_num=r.get('total') if r is not None else 0,
-                            result_time=r.get('took') if r is not None else 0,
-                            results=r.get('result') if r is not None else [],
-                            current_page=page_num,
-                            sort_type=request.args.get('sort'))
+                           domain=SITE.config.get('DOMAIN'),
+                           query_form=query_form,
+                           keyword=keyword,
+                           # result_num=r.get('total') if r is not None else 0,
+                           result_num=400,
+                           result_time=r.get('took') if r is not None else 0,
+                           results=r.get('result') if r is not None else [],
+                           current_page=page_num,
+                           sort_type=request.args.get('sort'))
 
 
 @SITE.route('/hash/<h>', methods=['GET'])

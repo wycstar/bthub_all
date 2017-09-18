@@ -3,8 +3,8 @@
 
 from form import TextQueryInput
 from flask import url_for, render_template, redirect, request
-from server import SITE
-from server import ELASTIC
+from server import SITE, ELASTIC
+from db import MONGO
 
 
 @SITE.route('/', methods=['GET', 'POST'])
@@ -34,7 +34,22 @@ def search_result(keyword, page_num):
 @SITE.route('/hash/<h>', methods=['GET'])
 def result_detail(h):
     query_form = TextQueryInput()
+    r = MONGO.get(h)
+    f, s = ELASTIC._convert(r['f'])
+    # 测试热度绘图
+    import random
+    import datetime
+    p = [random.randint(0, 10) for x in range(14)]
+    # 测试完毕
     if query_form.validate_on_submit():
         return redirect(url_for('search_result', keyword=query_form.keyword.data, page_num=1))
     return render_template('detail.html',
-                           query_form=query_form)
+                           query_form=query_form,
+                           name=r['n'],
+                           files=f,
+                           size=s,
+                           date=r['d'],
+                           mag='magnet:?xt=urn:btih:' + r['_id'],
+                           likes=ELASTIC.analyze(r['n']),
+                           chart_date=[(datetime.datetime.utcnow() - datetime.timedelta(days=x)).strftime("%m-%d") for x in range(14, 0, -1)],
+                           chart_data=p)

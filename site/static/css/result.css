@@ -1,7 +1,8 @@
 #wrap{
+    display: block;
     position: relative;
     min-width: 1150px;
-    min-height: 100%;
+    min-height: 500px;
 }
 
 #top{
@@ -132,24 +133,36 @@
     border-bottom: #eee solid 4px;
 }
 
-#type-selection a:nth-child(4n + 0):hover{
-    border-bottom: #4986ee solid 4px;
-}
-
-#type-selection a:nth-child(4n + 1):hover{
+#type-selection a:nth-child(2):hover{
     border-bottom: #3dbb56 solid 4px;
 }
 
-#type-selection a:nth-child(4n + 2):hover{
+#type-selection a:nth-child(3):hover{
     border-bottom: #f5c30e solid 4px;
 }
 
-#type-selection a:nth-child(4n + 3):hover{
+#type-selection a:nth-child(4):hover{
     border-bottom: #dc3338 solid 4px;
+}
+
+#type-selection a:nth-child(2):active{
+
+}
+
+#type-selection a:link{
+
+}
+
+#type-selection a:visited{
+
 }
 
 #type-selection a:hover{
     border-bottom: #4986ee solid 4px;
+}
+
+#type-selection a:active{
+
 }
 
 .type-selection-selected{
@@ -160,12 +173,12 @@
 
 #content{
     width: 1150px;
-    padding: 115px 0 150px 110px;
+    margin: 115px 0 30px 110px;
     background-color: white;
 }
 
 #left-content{
-    width:770px;
+    width:670px;
     -moz-transition: width .4s;
     transition: width .4s;
 }
@@ -176,12 +189,8 @@
     margin: 25px 0 0 0;
     padding-left: 10px;
     border-radius: 5px;
+    height:30px;
     line-height: 30px;
-    word-break: keep-all;
-}
-
-.num strong{
-    padding: 0 8px;
 }
 
 #result{
@@ -189,8 +198,8 @@
 }
 
 .item{
-    margin-bottom: 20px;
-    padding: 10px 10px 10px 10px;
+    margin-bottom: 2px;
+    padding: 10px 0 10px 10px;
     transition: background-color .5s;
     -webkit-transition: background-color .5s;
     -moz-transition: background-color .5s;
@@ -206,23 +215,11 @@
     margin-right: 15px;
 }
 
-.item ul li span{
-    max-width: 600px;
-    overflow: hidden;
-    white-space: nowrap;
-}
-
 .item h2{
     display: block;
     margin-bottom: 3px;
     color: #039be5 !important;
-    font-size: 18px;
-    word-wrap:break-word;
-}
-
-.item h2 em{
-    color: #dc3338;
-    font-style: normal;
+    font-size: 20px;
 }
 
 .item li{
@@ -230,10 +227,6 @@
     display: block;
     font-size: 15px;
     margin: 3px 0;
-}
-
-.item ul{
-    margin: 10px 0;
 }
 
 .item p{

@@ -12,7 +12,7 @@
     "mongodb": {
         "host": "localhost",
         "port": 27017,
-        "db": "dht",
-        "collection": "hashset"
+        "db": "test",
+        "collection": "test"
     }
 }

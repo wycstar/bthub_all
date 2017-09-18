@@ -16,4 +16,4 @@ if __name__ == '__main__':
     # dht.start()
     # dht.auto_send_find_node()
     # q.join()
-    SITE.run(host='0.0.0.0', debug=True, port=8000)
+    SITE.run(host='0.0.0.0', debug=True, port=28000)

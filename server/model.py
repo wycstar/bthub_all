@@ -35,7 +35,7 @@ class SearchManager(object):
             self._config_json = json.loads(f.read())
         self._url = 'http://localhost:9200/' + self._config_json['mongodb']['db'] + '/_search'
 
-    def _convert(self, f):
+    def _convert(self, f, all=False):
         n = []
         s = 0
         q = sorted(f, key=lambda k:k['l'], reverse=True)
@@ -46,7 +46,18 @@ class SearchManager(object):
                 'n': b if b != '' else 'UNNAMED',
                 'l': convert_readable_size(x.get('l'))
             })
-        return n[:10], convert_readable_size(s)
+        return n if all else n[:10], convert_readable_size(s)
+
+    def analyze(self, text):
+        search_format = {
+            "analyzer": "ik_smart",
+            "text": text
+        }
+        r = requests.post('http://localhost:9200/_analyze',
+                          data=json.dumps(search_format),
+                          headers={'Content-type': 'application/json'}).content
+        d = json.loads(r)
+        return sorted(map(lambda x: x.get('token'), d.get('tokens')), key=lambda k:len(k))
 
     def search(self, keyword, page, sort=0):
         k = []
@@ -90,7 +101,7 @@ class SearchManager(object):
                 'size': r[1],
                 'num': len(r[0]),
                 'mag': 'magnet:?xt=urn:btih:' + x.get('_id'),
-                'url': 'http://10.0.0.42:8000/hash/' + x.get('_id')
+                'url': 'http://fycx.mynetgear.com:28000/hash/' + x.get('_id')
             })
         return {
             'total': j.get('hits').get('total'),

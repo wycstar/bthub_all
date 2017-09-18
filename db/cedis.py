@@ -59,3 +59,11 @@ class RedisManager(object):
 
     def get_popular(self):
         return self._e.zrevrange('heat', 0, 9)
+
+    # 取出最近搜索的词语
+    def get_fresh(self):
+        pass
+
+    def clean_fresh(self):
+        l = self._e.zrangebyscore('fresh', 0, time.time() - time.time() % 86400 - 86400 * 14)
+        map(lambda x: self._e.zrem('fresh', x), l)

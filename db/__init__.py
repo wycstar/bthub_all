@@ -24,7 +24,7 @@ class DataProcess(Process):
     # 分析并清理热搜
     @staticmethod
     def manage_popular_search():
-        print 'OK'
+        REDIS.clean_fresh()
 
     # 从队列里取出种子的meta信息并存储
     def run(self):

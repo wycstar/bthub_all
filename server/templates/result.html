@@ -61,7 +61,7 @@
                     <div class="item">
                         <h2>
                             {% autoescape false %}
-                            <a href={{ x['url'] }} target="_blank">{{x['name']}}</a>
+                            <a href={{ '/hash/' ~ x['infohash'] }} target="_blank">{{x['name']}}</a>
                             {% endautoescape %}
                         </h2>
                         <ul>
@@ -82,7 +82,7 @@
                             收录时间：<span>{{ x['ctime'] }}</span>
                             <span class="icon-hidden">
                                 <i class="fa fa-magnet" aria-hidden="true"></i>
-                                <a href={{ x['mag'] }}>复制链接</a>
+                                <a href={{ 'magnet:?xt=urn:btih:' ~ x['infohash'] }}>复制链接</a>
                             </span>
                         </p>
                     </div>

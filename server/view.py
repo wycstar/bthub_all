@@ -3,7 +3,7 @@
 
 from form import TextQueryInput
 from flask import url_for, render_template, redirect, request
-from server import SITE, ELASTIC
+from server import SITE, ELASTIC, SERVER
 from db import MONGO
 
 
@@ -52,3 +52,13 @@ def result_detail(h):
                            likes=ELASTIC.analyze(r['n']),
                            chart_date=[(datetime.datetime.utcnow() - datetime.timedelta(days=x)).strftime("%m-%d") for x in range(14, 0, -1)],
                            chart_data=p)
+
+
+@SERVER.on('message')
+def handle_message(message):
+    print message
+
+
+@SERVER.on('like')
+def handle_like(message):
+    print message

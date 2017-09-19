@@ -12,7 +12,7 @@
     <script src="https://cdn.bootcss.com/jquery-color/2.1.2/jquery.color.min.js"></script>
     <script src="https://cdn.bootcss.com/echarts/3.7.1/echarts.min.js"></script>
     <script src="https://cdn.bootcss.com/lrsjng.jquery-qrcode/0.14.0/jquery-qrcode.min.js"></script>
-    <script src="https://cdn.bootcss.com/web-socket-js/1.0.0/web_socket.js"></script>
+    <script src="https://cdn.bootcss.com/socket.io/2.0.3/socket.io.slim.js"></script>
 </head>
 <body>
     <div id="wx-overlay"></div>
@@ -229,6 +229,18 @@
             var s = 'http://v.t.sina.com.cn/share/share.php?title='+ '我发现一个很好的资源!' +'&url='+ 'http://www.baidu.com' +'&content=utf-8&sourceUrl='+url;
             window.open(s,'newwindow','height=400,width=400,top=100,left=100');
         }
+        //websocket
+        var socket = io('10.0.0.42:28000');
+        socket.on('connect', function() {
+            alert('a');
+            socket.emit('message', {data: 'WYC connected!'});
+        });
+        socket.on('message', function(message) {
+            alert(message)
+        });
+        socket.on('update', function(message) {
+            alert(message)
+        });
     </script>
 </body>
 </html>

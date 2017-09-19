@@ -4,7 +4,7 @@
 from spider import Master
 from spider import DHTServer
 from db import DataProcess, REDIS
-from server import SITE
+from server import SITE, SERVER
 
 
 if __name__ == '__main__':
@@ -16,4 +16,5 @@ if __name__ == '__main__':
     # dht.start()
     # dht.auto_send_find_node()
     # q.join()
-    SITE.run(host='0.0.0.0', debug=True, port=28000)
+    SERVER.run(SITE, host='0.0.0.0', debug=True, port=28000)
+    # SITE.run(host='0.0.0.0', debug=True, port=28000)

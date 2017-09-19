@@ -104,8 +104,7 @@ class SearchManager(object):
                 'files': r[0],
                 'size': r[1],
                 'num': len(r[0]),
-                'mag': 'magnet:?xt=urn:btih:' + x.get('_id'),
-                'url': 'http://fycx.mynetgear.com:28000/hash/' + x.get('_id')
+                'infohash':x.get('_id')
             })
         return {
             'total': j.get('hits').get('total'),

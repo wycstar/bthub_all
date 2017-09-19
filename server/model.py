@@ -21,11 +21,17 @@ type:
 8: 下载量正序
 9: 下载量逆序
 '''
-SEARCH_TYPE = [{"sort": [{"_score": "asc"}]}, {"sort": [{"_score": "desc"}]},
-               {"sort": [{"m": "asc"}]}, {"sort": [{"m": "desc"}]},
-               {"sort": [{"l": "asc"}]}, {"sort": [{"l": "desc"}]},
-               {"sort": [{"s": "asc"}]}, {"sort": [{"s": "desc"}]},
-               {"sort": [{"c": "asc"}]}, {"sort": [{"c": "desc"}]}]
+SEARCH_TYPE = {}
+SEARCH_TYPE['heatasc']  = {"sort": [{"c": "asc"}]}
+SEARCH_TYPE['heatdesc'] = {"sort": [{"c": "desc"}]}
+SEARCH_TYPE['atimeasc']  = {"sort": [{"m": "asc"}]}
+SEARCH_TYPE['atimedesc'] = {"sort": [{"m": "desc"}]}
+SEARCH_TYPE['ctimeasc']  = {"sort": [{"d": "asc"}]}
+SEARCH_TYPE['ctimedesc'] = {"sort": [{"d": "desc"}]}
+SEARCH_TYPE['fileasc']  = {"sort": [{"s": "asc"}]}
+SEARCH_TYPE['filedesc'] = {"sort": [{"s": "desc"}]}
+SEARCH_TYPE['sizeasc']  = {"sort": [{"l": "asc"}]}
+SEARCH_TYPE['sizedesc'] = {"sort": [{"l": "desc"}]}
 
 
 class SearchManager(object):
@@ -59,38 +65,36 @@ class SearchManager(object):
         d = json.loads(r)
         return sorted(map(lambda x: x.get('token'), d.get('tokens')), key=lambda k:len(k))
 
-    def search(self, keyword, page, sort=0):
+    def search(self, keyword, page, sort=0, order=0):
         k = []
-        r = REDIS.get_cache(keyword)
-        if r is None:
-            search_format = {
-                "from": (page - 1) * 10,
-                "size": 10,
-                "query": {
-                    "match": {
-                        "n": {
-                            "query": keyword,
-                            "operator": "and"
-                        }
-                    }
-                },
-                "highlight": {
-                    "pre_tags": ["<em>"],
-                    "post_tags": ["</em>"],
-                    "fields": {
-                        "n": {}
+        search_format = {
+            "from": (page - 1) * 10,
+            "size": 10,
+            "query": {
+                "match": {
+                    "n": {
+                        "query": keyword,
+                        "operator": "and"
                     }
                 }
+            },
+            "highlight": {
+                "pre_tags": ["<em>"],
+                "post_tags": ["</em>"],
+                "fields": {
+                    "n": {}
+                }
             }
-            search_format.update(SEARCH_TYPE[sort])
-            r = requests.post(self._url,
-                              data=json.dumps(search_format),
-                              headers={'Content-type': 'application/json'}).content
-            REDIS.put_cache(keyword, r)
+        }
+        # search_format.update(SEARCH_TYPE[sort + '+' + 'oder'])
         try:
-            j = json.loads(r)
+            print SEARCH_TYPE.get(sort + order)
         except:
-            return None
+            pass
+        r = requests.post(self._url,
+                          data=json.dumps(search_format),
+                          headers={'Content-type': 'application/json'}).content
+        j = json.loads(r)
         for x in j.get('hits').get('hits'):
             a = x.get('_source')
             r = self._convert(a.get('f'))
@@ -108,8 +112,3 @@ class SearchManager(object):
             'took': j.get('took') / 1000.0,
             'result': k
         }
-
-
-if __name__ == '__main__':
-    s = SearchManager()
-    s.search('东京', 1)

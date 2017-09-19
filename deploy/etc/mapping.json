@@ -1,26 +1,36 @@
 {
 	"_all": {
-		"analyzer": "ik_max_word",
-		"search_analyzer": "ik_max_word",
-		"term_vector": "no",
-		"store": "false"
+		"enable": "false"
 	},
-	"properties":{
-		"n":{
-			"type":"text",
-			"store":"false",
+	"properties": {
+		"n": {
+			"type": "text",
 			"term_vector": "with_positions_offsets",
 			"analyzer": "ik_max_word",
-			"search_analyzer": "ik_max_word",
-			"include_in_all": "true"
+			"search_analyzer": "ik_max_word"
 		},
-		"f" : {
-			"type" : "object"
+		"f": {
+			"type": "object"
 		},
-		"d" : {
+		"d": {
 			"type": "long"
 		},
-		"s" : {
+		"m": {
+			"type": "long"
+		},
+		"s": {
+			"type": "long"
+		},
+		"l": {
+			"type": "long"
+		},
+		"e": {
+			"type": "boolean"
+		},
+		"t": {
+			"type": "short"
+		},
+		"c":{
 			"type": "long"
 		}
 	}

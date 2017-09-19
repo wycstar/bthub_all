@@ -12,6 +12,7 @@
     <script src="https://cdn.bootcss.com/jquery-color/2.1.2/jquery.color.min.js"></script>
     <script src="https://cdn.bootcss.com/echarts/3.7.1/echarts.min.js"></script>
     <script src="https://cdn.bootcss.com/lrsjng.jquery-qrcode/0.14.0/jquery-qrcode.min.js"></script>
+    <script src="https://cdn.bootcss.com/web-socket-js/1.0.0/web_socket.js"></script>
 </head>
 <body>
     <div id="wx-overlay"></div>
@@ -32,7 +33,7 @@
         <section id="top"></section>
         <div id="header">
             <div id="logo-wrapper">
-                <a href="http://www.bthub.me" target="_blank"><img src={{url_for('static', filename="img/logo_white.png")}}/></a>
+                <a href="/" target="_blank"><img src={{url_for('static', filename="img/logo_white.png")}}/></a>
             </div>
             <div id="search">
                 <form method="POST">
@@ -74,7 +75,7 @@
                             <tr><th>关键词</th><td id="keyword-breaker">
                                 {% for x in likes %}
                                     <em>
-                                        <a href="http://fycx.mynetgear.com:28000/s/{{x}}/1" target="_blank">
+                                        <a href="/s/{{x}}/1" target="_blank">
                                             {{x}}
                                         </a>
                                     </em>

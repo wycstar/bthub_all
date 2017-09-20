@@ -21,17 +21,11 @@ type:
 8: 下载量正序
 9: 下载量逆序
 '''
-SEARCH_TYPE = {}
-SEARCH_TYPE['heatasc']  = {"sort": [{"c": "asc"}]}
-SEARCH_TYPE['heatdesc'] = {"sort": [{"c": "desc"}]}
-SEARCH_TYPE['atimeasc']  = {"sort": [{"m": "asc"}]}
-SEARCH_TYPE['atimedesc'] = {"sort": [{"m": "desc"}]}
-SEARCH_TYPE['ctimeasc']  = {"sort": [{"d": "asc"}]}
-SEARCH_TYPE['ctimedesc'] = {"sort": [{"d": "desc"}]}
-SEARCH_TYPE['fileasc']  = {"sort": [{"s": "asc"}]}
-SEARCH_TYPE['filedesc'] = {"sort": [{"s": "desc"}]}
-SEARCH_TYPE['sizeasc']  = {"sort": [{"l": "asc"}]}
-SEARCH_TYPE['sizedesc'] = {"sort": [{"l": "desc"}]}
+SEARCH_TYPE = {'heatasc': {"sort": [{"c": "asc"}]}, 'heatdesc': {"sort": [{"c": "desc"}]},
+               'atimeasc': {"sort": [{"m": "asc"}]}, 'atimedesc': {"sort": [{"m": "desc"}]},
+               'ctimeasc': {"sort": [{"d": "asc"}]}, 'ctimedesc': {"sort": [{"d": "desc"}]},
+               'fileasc': {"sort": [{"s": "asc"}]}, 'filedesc': {"sort": [{"s": "desc"}]},
+               'sizeasc': {"sort": [{"l": "asc"}]}, 'sizedesc': {"sort": [{"l": "desc"}]}}
 
 
 class SearchManager(object):
@@ -41,10 +35,11 @@ class SearchManager(object):
             self._config_json = json.loads(f.read())
         self._url = 'http://localhost:9200/' + self._config_json['mongodb']['db'] + '/_search'
 
-    def _convert(self, f, all=False):
+    @staticmethod
+    def _convert(f, show_all=False):
         n = []
         s = 0
-        q = sorted(f, key=lambda k:k['l'], reverse=True)
+        q = sorted(f, key=lambda k: k['l'], reverse=True)
         for x in q:
             s += x.get('l')
             b = x.get('n').strip()
@@ -52,9 +47,10 @@ class SearchManager(object):
                 'n': b if b != '' else 'UNNAMED',
                 'l': convert_readable_size(x.get('l'))
             })
-        return n if all else n[:10], convert_readable_size(s)
+        return n if show_all else n[:10], convert_readable_size(s)
 
-    def analyze(self, text):
+    @staticmethod
+    def analyze(text):
         search_format = {
             "analyzer": "ik_smart",
             "text": text
@@ -63,10 +59,11 @@ class SearchManager(object):
                           data=json.dumps(search_format),
                           headers={'Content-type': 'application/json'}).content
         d = json.loads(r)
-        return sorted(map(lambda x: x.get('token'), d.get('tokens')), key=lambda k:len(k))
+        return sorted(map(lambda x: x.get('token'), d.get('tokens')), key=lambda k: len(k))
 
     def search(self, keyword, page, sort=0, order=0):
         k = []
+        REDIS.put_popular(keyword)
         search_format = {
             "from": (page - 1) * 10,
             "size": 10,

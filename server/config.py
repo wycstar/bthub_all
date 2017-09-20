@@ -17,7 +17,7 @@ class Config(object):
 
 
 class OnlineConfig(Config):
-    DEBUG = False
+    DEBUG = True
 
 
 class DevelopmentConfig(Config):

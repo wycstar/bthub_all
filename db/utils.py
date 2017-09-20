@@ -32,6 +32,8 @@ TYPE_KEYS = [
 5:压缩文件
 6:其他或者没有拓展名
 '''
+
+
 def get_file_type(l):
     t = [0 for x in range(7)]
     for x in l:
@@ -69,7 +71,7 @@ def parse_metadata(metadata, h):
         'f': files,
         'd': int(time()),
         '_id': h,
-        'l': sum(map(lambda x: x.get('l'), files)),
+        'l': sum(map(lambda y: y.get('l'), files)),
         's': len(files),
         'e': 1,
         't': get_file_type(files)

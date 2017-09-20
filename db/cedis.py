@@ -17,18 +17,11 @@ class RedisManager(object):
         # 存储资源的下载次数(热度)
         self._c = redis.Redis(host=j['redis']['host'],
                               port=j['redis']['port'],
-                              db=j['redis']['channel']['heat'],
-                              password=j['redis']['password'])
-        # 缓存前端的搜索结果
-        self._d = redis.Redis(host=j['redis']['host'],
-                              port=j['redis']['port'],
-                              db=j['redis']['channel']['search'],
-                              password=j['redis']['password'])
+                              db=j['redis']['channel']['heat'])
         # 存储最近一周内的关键词并作分析
         self._e = redis.Redis(host=j['redis']['host'],
                               port=j['redis']['port'],
-                              db=j['redis']['channel']['popular'],
-                              password=j['redis']['password'])
+                              db=j['redis']['channel']['popular'])
 
     def put_heat(self, h):
         hd = h + '-' + time.strftime("%Y-%m-%d")
@@ -39,15 +32,6 @@ class RedisManager(object):
         d = [(datetime.datetime.utcnow() - datetime.timedelta(days=x)).strftime("%Y-%m-%d") for x in range(14, 0, -1)]
         s = map(lambda x: 0 if x is None else int(x), [self._c.get(h + '-' + x) for x in d])
         return d, s
-
-    def put_cache(self, k, r):
-        p = self._d.pipeline()
-        p.set(k, r)
-        p.expire(k, 3600) # 缓存前端搜索结果1小时
-        p.execute()
-
-    def get_cache(self, h):
-        return self._d.get(h)
 
     # 利用两个sorted set来存储曾经搜过的词语，一个存储搜索数量，一个存储搜索时间，分别用于热搜和大家都在搜功能。
     # 在模块中定义了一个定时任务，每天删除14天之前的数据。
@@ -62,7 +46,7 @@ class RedisManager(object):
 
     # 取出最近搜索的词语
     def get_fresh(self):
-        pass
+        return self._e.zrevrange('fresh', 0, 9, withscores=True)
 
     def clean_fresh(self):
         l = self._e.zrangebyscore('fresh', 0, time.time() - time.time() % 86400 - 86400 * 14)

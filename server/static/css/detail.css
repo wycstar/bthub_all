@@ -26,7 +26,6 @@
     position: relative;
     width: 100%;
     height: 50px;
-    /*background-color: #c9481c;*/
 }
 
 .ws-header a{
@@ -47,7 +46,7 @@
 .ws-qr-tip{
     text-align: center;
     color: #666;
-    margin: 20px auto;
+    margin: 30px auto 0 auto;
     width: 250px;
 }
 
@@ -184,7 +183,6 @@
     padding: 10px 10px;
     border-radius: 8px;
     background-color: #f6f6f6;
-    /*word-wrap:break-word;*/
     word-break: break-all;
 }
 
@@ -216,6 +214,10 @@
 .heart-zone{
     font-size: 19px;
     padding-left: 15px;
+}
+
+.heart-zone a{
+
 }
 
 .num-zone{
@@ -449,6 +451,9 @@
     padding: 15px;
     background-color: #f0f0f0;
     border-radius: 8px;
+    transition: all 1s;
+    -webkit-transition: all 1s;
+    -moz-transition: all 1s;
 }
 
 #hot-search h3{
@@ -471,8 +476,10 @@
 }
 
 .hot-keyword{
-    width: 150px;
+    max-width: 185px;
     overflow: hidden;
+    text-overflow : ellipsis;
+    white-space: nowrap;
     display: block;
     height: 20px;
     line-height: 20px;
@@ -485,4 +492,19 @@
     line-height: 20px;
     display: block;
     width: 72px;
+    text-overflow : ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+#hot-search ul span i{
+    padding-right: 3px;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s
+}
+.fade-enter, .fade-leave-to
+{
+  opacity: 0
 }

@@ -2,17 +2,14 @@
 <html lang="zh-cn">
 <head>
     <meta charset="UTF-8">
-    <title>{{ keyword }}结果详情 - BTHUB</title>
+    <title>{{ name[:40] }} - 结果详情 - BTHUB</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href={{url_for('static', filename="css/public.css")}}>
     <link rel="stylesheet" type="text/css" href={{url_for('static', filename="css/footer.css")}}>
     <link rel="stylesheet" type="text/css" href={{url_for('static', filename="css/detail.css")}}>
     <link rel="stylesheet" type="text/css" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://cdn.bootcss.com/jquery-color/2.1.2/jquery.color.min.js"></script>
-    <script src="https://cdn.bootcss.com/echarts/3.7.1/echarts.min.js"></script>
-    <script src="https://cdn.bootcss.com/lrsjng.jquery-qrcode/0.14.0/jquery-qrcode.min.js"></script>
-    <script src="https://cdn.bootcss.com/socket.io/2.0.3/socket.io.slim.js"></script>
+    <script src="https://cdn.bootcss.com/vue/2.4.2/vue.min.js"></script>
+    <script src="https://cdn.bootcss.com/moment.js/2.18.1/moment.min.js"></script>
 </head>
 <body>
     <div id="wx-overlay"></div>
@@ -21,9 +18,7 @@
             <a onclick="closeWXShareWindow()"><i class="fa fa-times" aria-hidden="true"></i></a>
         </div>
         <div class="ws-content">
-            <div id="code">
-
-            </div>
+            <div id="code"></div>
             <div class="ws-qr-tip">
                 打开微信“扫一扫”，打开网页后点击屏幕右上角分享按钮
             </div>
@@ -53,8 +48,10 @@
                     {{ name }}
                 </h2>
                 <div id="bonus" class="clearfix">
-                    <div class="like-button fl">
-                        <span class="heart-zone"><i class="fa fa-heart-o" aria-hidden="true"></i>喜欢</span>
+                    <div class="like-button fl" id="like">
+                        <span class="heart-zone">
+                            <a v-on:click="upvote()"><i class="fa fa-heart-o" aria-hidden="true"></i>喜欢</a>
+                        </span>
                         <span class="num-zone">| 4</span>
                     </div>
                     <div class="share-zone fr">
@@ -74,11 +71,7 @@
                             <tr><th>文件数量</th><td>{{ files|length }}</td></tr>
                             <tr><th>关键词</th><td id="keyword-breaker">
                                 {% for x in likes %}
-                                    <em>
-                                        <a href="/s/{{x}}/1" target="_blank">
-                                            {{x}}
-                                        </a>
-                                    </em>
+                                    <em><a href="/s/{{x}}/1" target="_blank">{{x}}</a></em>
                                 {% endfor %}
                             </tr>
                         </tbody>
@@ -91,11 +84,8 @@
                 </div>
                 <div id="chart">
                     <h2>历史热度</h2>
-                    <div id="chart-wrap">
-
-                    </div>
+                    <div id="chart-wrap"></div>
                 </div>
-
                 <div id="file">
                     <h2>文件列表</h2>
                     <ul class="file-list">
@@ -116,48 +106,14 @@
             <div id="right-content" class="fr">
                 <div id="hot-search">
                     <h3>大家都在搜</h3>
+                    <script src="https://cdn.bootcss.com/socket.io/2.0.3/socket.io.slim.js"></script>
                     <ul>
-                        <li class="clearfix">
-                            <a class="hot-keyword">coat ryo</a>
-                            <span><i class="fa fa-clock-o" aria-hidden="true"></i>18 分钟前</span>
-                        </li>
-                        <li class="clearfix">
-                            <a class="hot-keyword">keyword1</a>
-                            <span><i class="fa fa-clock-o" aria-hidden="true"></i>18 分钟前</span>
-                        </li>
-                        <li class="clearfix">
-                            <a class="hot-keyword">keyword1</a>
-                            <span><i class="fa fa-clock-o" aria-hidden="true"></i>18 分钟前</span>
-                        </li>
-                        <li class="clearfix">
-                            <a class="hot-keyword">keyword1</a>
-                            <span><i class="fa fa-clock-o" aria-hidden="true"></i>18 分钟前</span>
-                        </li>
-                        <li class="clearfix">
-                            <a class="hot-keyword">keyword1</a>
-                            <span><i class="fa fa-clock-o" aria-hidden="true"></i>18 分钟前</span>
-                        </li>
-                        <li class="clearfix">
-                            <a class="hot-keyword">肖申克的救赎</a>
-                            <span><i class="fa fa-clock-o" aria-hidden="true"></i>18 分钟前</span>
-                        </li>
-                        <li class="clearfix">
-                            <a class="hot-keyword">肖申克的救赎</a>
-                            <span><i class="fa fa-clock-o" aria-hidden="true"></i>18 分钟前</span>
-                        </li>
-                        <li class="clearfix">
-                            <a class="hot-keyword">肖申克的救赎</a>
-                            <span><i class="fa fa-clock-o" aria-hidden="true"></i>18 分钟前</span>
-                        </li>
-                        <li class="clearfix">
-                            <a class="hot-keyword">肖申克的救赎</a>
-                            <span><i class="fa fa-clock-o" aria-hidden="true"></i>18 分钟前</span>
-                        </li>
-                        <li class="clearfix">
-                            <a class="hot-keyword">肖申克的救赎</a>
-                            <span><i class="fa fa-clock-o" aria-hidden="true"></i>18 分钟前</span>
+                        <li class="clearfix" v-for="item in items">
+                            <a class="hot-keyword">[[ item[0] ]]</a>
+                            <span><i class="fa fa-clock-o" aria-hidden="true"></i>[[ item[1] ]]</span>
                         </li>
                     </ul>
+                    <script src={{url_for('static', filename="js/recent.js")}}></script>
                 </div>
             </div>
         </div>
@@ -174,9 +130,14 @@
             <div class="footer-bottom"></div>
         </div>
     </div>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery-color/2.1.2/jquery.color.min.js"></script>
+    <script src="https://cdn.bootcss.com/echarts/3.7.1/echarts.min.js"></script>
+    <script src="https://cdn.bootcss.com/lrsjng.jquery-qrcode/0.14.0/jquery-qrcode.min.js"></script>
+    <script src={{url_for('static', filename="js/custom.js")}}></script>
     <script type="text/javascript">
-        var myChart = echarts.init(document.getElementById('chart-wrap'));
-        var option = {
+        let historyFigure = echarts.init(document.getElementById('chart-wrap'));
+        let option = {
             title: {
                 text: ''
             },
@@ -199,48 +160,7 @@
                 data: {{ chart_data }}
             }]
         };
-        myChart.setOption(option);
-        $("#code").qrcode({
-            render: "table",
-            width: 200,
-            height:200,
-            text: "http://www.bthub.me"
-        });
-        var wo = $("#wx-overlay");
-        var ws = $("#wx-share");
-        function openWXShareWindow(){
-            var wo = $("#wx-overlay");
-            var ws = $("#wx-share");
-            wo.css("z-index", 10000);
-            ws.css("z-index", 10001);
-            wo.fadeTo(500, 0.5);
-            ws.fadeTo(500, 1.0);
-        }
-        function az(){
-            wo.css("z-index", 0);
-            ws.css("z-index", 0);
-        }
-        function closeWXShareWindow() {
-            wo.fadeTo(500, 0);
-            ws.fadeTo(500, 0);
-            setTimeout("az()", 500);
-        }
-        function openWBShareWindow(title, url){
-            var s = 'http://v.t.sina.com.cn/share/share.php?title='+ '我发现一个很好的资源!' +'&url='+ 'http://www.baidu.com' +'&content=utf-8&sourceUrl='+url;
-            window.open(s,'newwindow','height=400,width=400,top=100,left=100');
-        }
-        //websocket
-        var socket = io('10.0.0.42:28000');
-        socket.on('connect', function() {
-            alert('a');
-            socket.emit('message', {data: 'WYC connected!'});
-        });
-        socket.on('message', function(message) {
-            alert(message)
-        });
-        socket.on('update', function(message) {
-            alert(message)
-        });
+        historyFigure.setOption(option);
     </script>
 </body>
 </html>

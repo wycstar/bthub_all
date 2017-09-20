@@ -6,8 +6,7 @@
             "heat": 0,
             "search": 1,
             "popular": 2
-        },
-        "password": "buNMyTNg1tekBN0o"
+        }
     },
     "mongodb": {
         "host": "localhost",

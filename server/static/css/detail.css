@@ -5,8 +5,8 @@
     position: fixed;
     right: 0;
     top: 0;
-    z-index: 0;
-    opacity: 0;
+    z-index: 99999;
+    opacity: 0.5;
 }
 
 #wx-share{
@@ -14,7 +14,7 @@
     width: 300px;
     height: 400px;
     background-color: white;
-    top: 50%;
+    top: 40%;
     left: 50%;
     margin-left: -150px;
     margin-top: -200px;
@@ -54,6 +54,30 @@
     width: 200px;
     height: 200px;
     margin: 0 auto;
+}
+
+#donate{
+    position: fixed;
+    width: 500px;
+    height: 500px;
+    background-color: white;
+    top: 40%;
+    left: 50%;
+    margin-left: -250px;
+    margin-top: -250px;
+    z-index: 100000;
+    opacity: 1.0;
+}
+
+.donate-header{
+    width: 460px;
+    height: 30px;
+    padding: 20px 10px 0 20px;
+    font-size: 20px;
+}
+
+.df-wrapper{
+
 }
 
 #wrap{
@@ -222,7 +246,7 @@
 
 .num-zone{
     font-size: 19px;
-    padding-left: 13px;
+    padding-left: 3px;
 }
 
 .share-zone a{
@@ -444,61 +468,6 @@
     font-weight: 500;
     float: right;
     vertical-align: middle;
-}
-
-#hot-search{
-    width: 270px;
-    padding: 15px;
-    background-color: #f0f0f0;
-    border-radius: 8px;
-    transition: all 1s;
-    -webkit-transition: all 1s;
-    -moz-transition: all 1s;
-}
-
-#hot-search h3{
-    color: #666;
-    font-size: 20px;
-    font-weight: bold;
-    padding-left: 28px;
-    background: url(../img/hot.png) left no-repeat;
-}
-
-#hot-search ul{
-    margin-top: 10px;
-}
-
-#hot-search li{
-    display: block;
-    margin-top: 4px;
-    font-size: 13px;
-    color: #666;
-}
-
-.hot-keyword{
-    max-width: 185px;
-    overflow: hidden;
-    text-overflow : ellipsis;
-    white-space: nowrap;
-    display: block;
-    height: 20px;
-    line-height: 20px;
-    float: left;
-}
-
-#hot-search ul span{
-    float: right;
-    height: 20px;
-    line-height: 20px;
-    display: block;
-    width: 72px;
-    text-overflow : ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-}
-
-#hot-search ul span i{
-    padding-right: 3px;
 }
 
 .fade-enter-active, .fade-leave-active {

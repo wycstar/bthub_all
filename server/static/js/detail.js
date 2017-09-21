@@ -22,9 +22,6 @@ function closeWXShareWindow() {
     setTimeout("az()", 500);
 }
 function openWBShareWindow() {
-    let s = 'http://v.t.sina.com.cn/share/share.php?title=我发现一个很好的关于《' + document.title.slice(0, -15) + '》的资源!&url=' + window.location.href + '&content=utf-8&sourceUrl=' + window.location.href;
+    let s = 'http://v.t.sina.com.cn/share/share.php?title=我在BTHUB发现一个很好的关于《' + document.title.slice(0, -15) + '》的资源!&url=' + window.location.href + '&content=utf-8&sourceUrl=' + window.location.href;
     window.open(s, 'newwindow', 'height=400,width=400,top=100,left=100');
 }
-// function like() {
-//     socket.emit('message', {data:123})
-// }

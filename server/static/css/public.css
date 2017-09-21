@@ -45,3 +45,9 @@ img, fieldset {
     clear: both;
     visibility: hidden;
 }
+
+.wide-animate{
+    transition: all .5s;
+    -webkit-transition: all .5s;
+    -moz-animation: all .5s;
+}

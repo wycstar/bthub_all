@@ -1,0 +1,13 @@
+{% macro recent() %}
+<div id="hot-search">
+    <h3>大家都在搜</h3>
+    <script src="https://cdn.bootcss.com/socket.io/2.0.3/socket.io.slim.js"></script>
+    <ul>
+        <li class="clearfix" v-for="item in hItems">
+            <a :href="'/s/' + item[0] + '/1'" class="hot-keyword" target="_blank">[[ item[0] ]]</a>
+            <span><i class="fa fa-clock-o" aria-hidden="true"></i>[[ item[1] ]]</span>
+        </li>
+    </ul>
+    <script src={{url_for('static', filename="js/recent.js")}}></script>
+</div>
+{% endmacro %}

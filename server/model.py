@@ -36,7 +36,7 @@ class SearchManager(object):
         self._url = 'http://localhost:9200/' + self._config_json['mongodb']['db'] + '/_search'
 
     @staticmethod
-    def _convert(f, show_all=False):
+    def _convert(f):
         n = []
         s = 0
         q = sorted(f, key=lambda k: k['l'], reverse=True)
@@ -47,7 +47,7 @@ class SearchManager(object):
                 'n': b if b != '' else 'UNNAMED',
                 'l': convert_readable_size(x.get('l'))
             })
-        return n if show_all else n[:10], convert_readable_size(s)
+        return n, convert_readable_size(s)
 
     @staticmethod
     def analyze(text):

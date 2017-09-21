@@ -7,9 +7,11 @@
     <link rel="stylesheet" type="text/css" href={{url_for('static', filename="css/public.css")}}>
     <link rel="stylesheet" type="text/css" href={{url_for('static', filename="css/footer.css")}}>
     <link rel="stylesheet" type="text/css" href={{url_for('static', filename="css/detail.css")}}>
+    <link rel="stylesheet" type="text/css" href={{url_for('static', filename="css/sidebar.css")}}>
     <link rel="stylesheet" type="text/css" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://cdn.bootcss.com/vue/2.4.2/vue.min.js"></script>
     <script src="https://cdn.bootcss.com/moment.js/2.18.1/moment.min.js"></script>
+    <script src="https://cdn.bootcss.com/moment.js/2.18.1/locale/zh-cn.js"></script>
 </head>
 <body>
     <div id="wx-overlay"></div>
@@ -22,6 +24,17 @@
             <div class="ws-qr-tip">
                 打开微信“扫一扫”，打开网页后点击屏幕右上角分享按钮
             </div>
+        </div>
+    </div>
+    <div id="donate">
+        <div class="donate-header clearfix">
+            <a onclick="" class="fr"><i class="fa fa-times" aria-hidden="true"></i></a>
+        </div>
+        <img src={{url_for('static', filename="img/beg.png")}}/>
+        <div class="df-wrapper">
+            <form>
+
+            </form>
         </div>
     </div>
     <div id="wrap">
@@ -48,12 +61,7 @@
                     {{ name }}
                 </h2>
                 <div id="bonus" class="clearfix">
-                    <div class="like-button fl" id="like">
-                        <span class="heart-zone">
-                            <a v-on:click="upvote()"><i class="fa fa-heart-o" aria-hidden="true"></i>喜欢</a>
-                        </span>
-                        <span class="num-zone">| 4</span>
-                    </div>
+                    <likeit :count="{{ vote or 0 }}" :infohash="'{{ mag[-40:] }}'"></likeit>
                     <div class="share-zone fr">
                         <span>分享到:</span>
                         <a onclick="openWXShareWindow()"><i class="fa fa-weixin share-wx" aria-hidden="true"></i></a>
@@ -78,7 +86,7 @@
                     </table>
                 </div>
                 <div id="action">
-                    <a><i class="fa fa-magnet" aria-hidden="true"></i>复制链接</a>
+                    <a href={{ mag }}><i class="fa fa-magnet" aria-hidden="true"></i>复制链接</a>
                     <a><i class="fa fa-download" aria-hidden="true"></i>下载种子</a>
                     <a><i class="fa fa-qrcode" aria-hidden="true"></i>拿钱砸我</a>
                 </div>
@@ -104,17 +112,8 @@
                 </div>
             </div>
             <div id="right-content" class="fr">
-                <div id="hot-search">
-                    <h3>大家都在搜</h3>
-                    <script src="https://cdn.bootcss.com/socket.io/2.0.3/socket.io.slim.js"></script>
-                    <ul>
-                        <li class="clearfix" v-for="item in items">
-                            <a class="hot-keyword">[[ item[0] ]]</a>
-                            <span><i class="fa fa-clock-o" aria-hidden="true"></i>[[ item[1] ]]</span>
-                        </li>
-                    </ul>
-                    <script src={{url_for('static', filename="js/recent.js")}}></script>
-                </div>
+                {% import 'widget.html' as sidebar %}
+                {{ sidebar.recent() }}
             </div>
         </div>
         <div id="foot">
@@ -134,7 +133,8 @@
     <script src="https://cdn.bootcss.com/jquery-color/2.1.2/jquery.color.min.js"></script>
     <script src="https://cdn.bootcss.com/echarts/3.7.1/echarts.min.js"></script>
     <script src="https://cdn.bootcss.com/lrsjng.jquery-qrcode/0.14.0/jquery-qrcode.min.js"></script>
-    <script src={{url_for('static', filename="js/custom.js")}}></script>
+    <script src={{url_for('static', filename="js/detail.js")}}></script>
+    <script src={{url_for('static', filename="js/public.js")}}></script>
     <script type="text/javascript">
         let historyFigure = echarts.init(document.getElementById('chart-wrap'));
         let option = {

@@ -1,0 +1,59 @@
+.hot-search-fixed{
+    position: fixed;
+    top: 140px;
+}
+
+#hot-search{
+    width: 270px;
+    padding: 15px;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    transition: all 1s;
+    -webkit-transition: all 1s;
+    -moz-transition: all 1s;
+}
+
+#hot-search h3{
+    color: #666;
+    font-size: 20px;
+    font-weight: bold;
+    padding-left: 28px;
+    background: url(../img/hot.png) left no-repeat;
+}
+
+#hot-search ul{
+    margin-top: 10px;
+}
+
+#hot-search li{
+    display: block;
+    margin-top: 4px;
+    font-size: 13px;
+    color: #666;
+}
+
+.hot-keyword{
+    max-width: 185px;
+    overflow: hidden;
+    text-overflow : ellipsis;
+    white-space: nowrap;
+    display: block;
+    height: 20px;
+    line-height: 20px;
+    float: left;
+}
+
+#hot-search ul span{
+    float: right;
+    height: 20px;
+    line-height: 20px;
+    display: block;
+    width: 72px;
+    text-overflow : ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+#hot-search ul span i{
+    padding-right: 3px;
+}

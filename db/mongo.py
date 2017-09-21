@@ -45,3 +45,15 @@ class MongoManager(object):
 
     def count(self):
         return self._c.find().count()
+
+    def like(self, h):
+        self._c.update(
+            {'_id': h},
+            {'$inc': {'g': 1}}
+        )
+
+    def unlike(self, h):
+        self._c.update(
+            {'_id': h},
+            {'$inc': {'g': -1}}
+        )

@@ -5,6 +5,7 @@ from form import TextQueryInput
 from flask import url_for, render_template, redirect, request
 from server import SITE, ELASTIC, SERVER
 from db import MONGO
+import re
 
 
 @SITE.route('/', methods=['GET', 'POST'])
@@ -30,7 +31,7 @@ def search_result(keyword, page_num):
                            current_page=page_num)
 
 
-@SITE.route('/hash/<h>', methods=['GET'])
+@SITE.route('/hash/<h>', methods=['GET', 'POST'])
 def result_detail(h):
     query_form = TextQueryInput()
     r = MONGO.get(h)
@@ -51,7 +52,8 @@ def result_detail(h):
                            mag='magnet:?xt=urn:btih:' + r['_id'],
                            likes=ELASTIC.analyze(r['n']),
                            chart_date=[(datetime.datetime.utcnow() - datetime.timedelta(days=x)).strftime("%m-%d") for x in range(14, 0, -1)],
-                           chart_data=p)
+                           chart_data=p,
+                           vote=r.get('g'))
 
 
 @SERVER.on('message')
@@ -61,4 +63,13 @@ def handle_message(message):
 
 @SERVER.on('like')
 def handle_like(message):
-    print message
+    print 'like {0}'.format(message)
+    if re.search(r'^[0-9a-fA-F]+$', message) and len(message) == 40:
+        MONGO.like(message)
+
+
+@SERVER.on('unlike')
+def handle_like(message):
+    print 'unlike {0}'.format(message)
+    if re.search(r'^[0-9a-fA-F]+$', message) and len(message) == 40:
+        MONGO.unlike(message)

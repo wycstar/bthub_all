@@ -1,44 +1,83 @@
-*{
+* {
     margin: 0;
     padding: 0;
-    -webkit-appearance:none;
+    -webkit-appearance: none;
     font-family: dashicons, 'Segoe UI', 'WenQuanYi Micro Hei', 'WenQuanYi Micro Hei Mono', 'Microsoft Yahei', 'Microsoft Yahei Mono', 微软雅黑, sans-serif;
 }
-input,button,select,textarea{outline:none}
-html{
+
+input, button, select, textarea {
+    outline: none
+}
+
+select {
+    border: solid 1px #000;
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    background: url("http://ourjs.github.io/static/2015/arrow.png") no-repeat scroll right center transparent;
+    padding-right: 14px;
+}
+
+input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    outline: none;
+    display: none
+}
+
+select::-ms-expand {
+    display: none;
+}
+
+html {
     height: 100%;
     -webkit-font-smoothing: antialiased;
 }
-body{
+
+body {
     min-height: 512px;
 }
-ul, ol, li{list-style: none;}
-a{
+
+ul, ol, li {
+    list-style: none;
+}
+
+a {
     text-decoration: none;
     color: inherit;
     cursor: pointer;
 }
-.fl{float: left}
-.fr{float: right}
-.css-center{
+
+.fl {
+    float: left
+}
+
+.fr {
+    float: right
+}
+
+.css-center {
     margin-left: auto;
     margin-right: auto;
 }
-.css-hide{
-    display:none;
+
+.css-hide {
+    display: none;
 }
-.css-block{
+
+.css-block {
     display: block;
 }
+
 img, fieldset {
     border: none;
 }
 
-.clearfix{
+.clearfix {
     zoom: 1;
 }
 
-.clearfix:after{
+.clearfix:after {
     content: ".";
     display: block;
     height: 0;
@@ -46,8 +85,149 @@ img, fieldset {
     visibility: hidden;
 }
 
-.wide-animate{
+.wide-animate {
     transition: all .5s;
     -webkit-transition: all .5s;
     -moz-animation: all .5s;
 }
+
+@keyframes hover-color {
+    from {
+        border-color: #c0c0c0;
+    }
+    to {
+        border-color: #fd6853;
+    }
+}
+
+.magic-radio,
+.magic-checkbox {
+    position: absolute;
+    display: none;
+}
+
+.magic-radio[disabled],
+.magic-checkbox[disabled] {
+    cursor: not-allowed;
+}
+
+.magic-radio + label,
+.magic-checkbox + label {
+    position: relative;
+    display: block;
+    padding-left: 30px;
+    cursor: pointer;
+    vertical-align: middle;
+}
+
+.magic-radio + label:hover:before,
+.magic-checkbox + label:hover:before {
+    animation-duration: 0.4s;
+    animation-fill-mode: both;
+    animation-name: hover-color;
+}
+
+.magic-radio + label:before,
+.magic-checkbox + label:before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    content: '';
+    border: 1px solid #c0c0c0;
+}
+
+.magic-radio + label:after,
+.magic-checkbox + label:after {
+    position: absolute;
+    display: none;
+    content: '';
+}
+
+.magic-radio[disabled] + label,
+.magic-checkbox[disabled] + label {
+    cursor: not-allowed;
+    color: #e4e4e4;
+}
+
+.magic-radio[disabled] + label:hover, .magic-radio[disabled] + label:before, .magic-radio[disabled] + label:after,
+.magic-checkbox[disabled] + label:hover,
+.magic-checkbox[disabled] + label:before,
+.magic-checkbox[disabled] + label:after {
+    cursor: not-allowed;
+}
+
+.magic-radio[disabled] + label:hover:before,
+.magic-checkbox[disabled] + label:hover:before {
+    border: 1px solid #e4e4e4;
+    animation-name: none;
+}
+
+.magic-radio[disabled] + label:before,
+.magic-checkbox[disabled] + label:before {
+    border-color: #e4e4e4;
+}
+
+.magic-radio:checked + label:before,
+.magic-checkbox:checked + label:before {
+    animation-name: none;
+}
+
+.magic-radio:checked + label:after,
+.magic-checkbox:checked + label:after {
+    display: block;
+}
+
+.magic-radio + label:before {
+    border-radius: 50%;
+}
+
+.magic-radio + label:after {
+    top: 7px;
+    left: 7px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #fd6853;
+}
+
+.magic-radio:checked + label:before {
+    border: 1px solid #fd6853;
+}
+
+.magic-radio:checked[disabled] + label:before {
+    border: 1px solid #c9e2f9;
+}
+
+.magic-radio:checked[disabled] + label:after {
+    background: #c9e2f9;
+}
+
+.magic-checkbox + label:before {
+    border-radius: 3px;
+}
+
+.magic-checkbox + label:after {
+    top: 2px;
+    left: 7px;
+    box-sizing: border-box;
+    width: 6px;
+    height: 12px;
+    transform: rotate(45deg);
+    border: 0 solid #fff;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+}
+
+.magic-checkbox:checked + label:before {
+    border: #3e97eb;
+    background: #3e97eb;
+}
+
+.magic-checkbox:checked[disabled] + label:before {
+    border: #c9e2f9;
+    background: #c9e2f9;
+}
+

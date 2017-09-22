@@ -5,8 +5,8 @@
     position: fixed;
     right: 0;
     top: 0;
-    z-index: 99999;
-    opacity: 0.5;
+    z-index: 0;
+    opacity: 0.0;
 }
 
 #wx-share{
@@ -59,25 +59,144 @@
 #donate{
     position: fixed;
     width: 500px;
-    height: 500px;
+    height: 650px;
     background-color: white;
     top: 40%;
     left: 50%;
     margin-left: -250px;
     margin-top: -250px;
     z-index: 100000;
-    opacity: 1.0;
+    /*opacity: 1.0;*/
+    display: none;
 }
 
-.donate-header{
-    width: 460px;
-    height: 30px;
-    padding: 20px 10px 0 20px;
+.donate-avatar{
+    position: relative;
+    width: 100%;
+    height: 180px;
     font-size: 20px;
 }
 
-.df-wrapper{
+.donate-avatar a{
+    display: inline-block;
+    position: absolute;
+    top:10px;
+    right: 15px;
+}
 
+.donate-avatar img{
+    display: inline-block;
+    position: absolute;
+    margin-top: 20px;
+    left: 50%;
+    margin-left: -75px;
+}
+
+.donate-header-text{
+    width: 450px;
+    padding-top: 12px;
+    margin: 0 auto;
+    padding-bottom: 20px;
+    text-align: center;
+    border-bottom: #ddd solid 1px;
+}
+
+.donate-header-text i{
+    color: #ccc;
+}
+
+.donate-header-text span{
+    font-size: 20px;
+    color: #333;
+    padding: 0 5px;
+}
+
+.df-wrapper{
+    padding:20px 40px 0 40px;
+    width:420px;
+}
+
+.df-qrcode{
+    text-align: center;
+}
+
+.df-method{
+    padding-left: 40px;
+}
+
+.df-method-wx,.df-method-ali{
+    position: relative;
+    width: 190px;
+    height: 60px;
+}
+
+.df-method img{
+    position: absolute;
+    display: inline-block;
+    height: 35px;
+    top:20px;
+    left: 42px;
+}
+
+.df-method label{
+    position: absolute;
+    display: inline-block;
+    width: 20px;
+    top:26px;
+    left: 10px;
+}
+
+.df-amount{
+    margin-top: 25px;
+    text-align: center;
+}
+
+.df-amount-wrap{
+    vertical-align: top;
+}
+
+.df-amount-n{
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+    border-radius: 80px;
+    border:#ddd solid 2px;
+    line-height: 80px;
+    text-align: center;
+    vertical-align: top;
+    font-size: 25px;
+    color: #ea6f5a;
+    font-weight: bold;
+}
+
+.df-amount-l{
+    display: inline-block;
+    width: 30px;
+    height: 80px;
+    line-height: 80px;
+    padding-right: 10px;
+    font-size: 35px;
+    vertical-align: top;
+    color: #ea6f5a;
+    text-align: center;
+}
+
+.df-amount-r{
+    display: inline-block;
+    width: 30px;
+    height: 80px;
+    vertical-align: top;
+    line-height: 80px;
+    text-align: center;
+    padding-left: 10px;
+    font-size: 35px;
+    color: #ea6f5a;
+}
+
+.df-amount-l:hover, .df-amount-r:hover{
+    cursor: pointer;
+    opacity: 0.8;
+    transition: opacity .5s;
 }
 
 #wrap{

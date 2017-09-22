@@ -27,14 +27,44 @@
         </div>
     </div>
     <div id="donate">
-        <div class="donate-header clearfix">
-            <a onclick="" class="fr"><i class="fa fa-times" aria-hidden="true"></i></a>
+        <div class="donate-avatar">
+            <a onclick=""><i class="fa fa-times" aria-hidden="true"></i></a>
+            <img src={{url_for('static', filename="img/beg.png")}}/>
         </div>
-        <img src={{url_for('static', filename="img/beg.png")}}/>
+        <div class="donate-header-text">
+            <i class="fa fa-quote-left" aria-hidden="true"></i>
+            <span>点赞是鼓励，打赏是美德</span>
+            <i class="fa fa-quote-right" aria-hidden="true"></i>
+        </div>
         <div class="df-wrapper">
-            <form>
-
-            </form>
+            <div class="df-qrcode">
+                <img src={{url_for('static', filename="img/pay/wx-2.png")}} width="200" height="200">
+            </div>
+            <div class="df-method clearfix">
+                <div class="df-method-wx fl">
+                    <input class="magic-radio" type="radio" name="radio" id="pay-method-wx" value="option1">
+                    <label for="pay-method-wx">&nbsp</label>
+                    <img src={{url_for('static', filename="img/pay/wx-pay.png")}} />
+                </div>
+                <div class="df-method-ali fr">
+                    <input class="magic-radio" type="radio" name="radio" id="pay-method-ali" value="option1">
+                    <label for="pay-method-ali">&nbsp</label>
+                    <img src={{url_for('static', filename="img/pay/ali-pay.png")}} />
+                </div>
+            </div>
+            <div class="df-amount">
+                <span class="df-amount-wrap">
+                    <span class="df-amount-l">
+                        <a><i class="fa fa-caret-left" aria-hidden="true"></i></a>
+                    </span>
+                    <span class="df-amount-n">
+                        <i class="fa fa-jpy" aria-hidden="true"></i>2
+                    </span>
+                    <span class="df-amount-r">
+                        <a><i class="fa fa-caret-right" aria-hidden="true"></i></i></a>
+                    </span>
+                </span>
+            </div>
         </div>
     </div>
     <div id="wrap">
@@ -88,7 +118,7 @@
                 <div id="action">
                     <a href={{ mag }}><i class="fa fa-magnet" aria-hidden="true"></i>复制链接</a>
                     <a><i class="fa fa-download" aria-hidden="true"></i>下载种子</a>
-                    <a><i class="fa fa-qrcode" aria-hidden="true"></i>拿钱砸我</a>
+                    <a onclick="openDonateWindow()"><i class="fa fa-qrcode" aria-hidden="true"></i>拿钱砸我</a>
                 </div>
                 <div id="chart">
                     <h2>历史热度</h2>

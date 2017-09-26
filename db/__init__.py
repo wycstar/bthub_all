@@ -21,9 +21,9 @@ class DataProcess(Process):
         Process.__init__(self)
         self.scheduler = BackgroundScheduler()
         self.scheduler.add_job(DataProcess.manage_popular_search, trigger='cron', hour='0', minute='0')  # 每天都分析热搜
-        self.scheduler.add_job(DataProcess.push_recent_search, trigger='interval', seconds=3)
+        self.scheduler.add_job(DataProcess.push_recent_search, trigger='interval', seconds=3) # 每三秒向客户端发送最近的用户搜索关键词
 
-    # 分析并清理热搜
+    # 分析并清除14天之前的热搜数据
     @staticmethod
     def manage_popular_search():
         REDIS.clean_fresh()

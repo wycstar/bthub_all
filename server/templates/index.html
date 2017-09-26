@@ -4,8 +4,11 @@
     <meta charset="UTF-8">
     <title>BTHUB - 做最好的资源站</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="../static/img/favicon.ico" />
     <link rel="stylesheet" type="text/css" href={{url_for('static', filename="css/public.css")}}>
     <link rel="stylesheet" type="text/css" href={{url_for('static', filename="css/main.css")}}>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/jqueryui/1.12.1/jquery-ui.js"></script>
 </head>
 <body class="main-skin">
     <div class="mask"></div>
@@ -22,7 +25,7 @@
                 </ul>
             </div>
         </div>
-        <section id="splash" class="margin-animation">
+        <section id="splash">
                 <span>
                 </span>
         </section>
@@ -31,7 +34,7 @@
                 {{ form.hidden_tag() }}
                 <fieldset id="search-container">
                     <div id="search-input" class="search-input-skin hover-animation">
-                        {{ form.keyword(id="input", autocomplete="off") }}
+                        {{ form.keyword(id="input") }}
                     </div>
                     {{ form.submit(class="search-button-skin hover-animation", id="search-button") }}
                 </fieldset>
@@ -41,5 +44,41 @@
             <p>© 2017 bthub.me | <a href="#" target="_blank">免责声明</a> | 致力于提供最好的搜索体验</p>
         </div>
     </div>
+    <script>
+             $(function () {
+                 let availableTags = [
+                     "ActionScript",
+                     "AppleScript",
+                     "Asp",
+                     "BASIC",
+                     "C",
+                     "C++",
+                     "Clojure",
+                     "COBOL",
+                     "ColdFusion",
+                     "Erlang",
+                     "Fortran",
+                     "Groovy",
+                     "Haskell",
+                     "Java",
+                     "JavaScript",
+                     "Lisp",
+                     "Perl",
+                     "PHP",
+                     "Python",
+                     "Ruby",
+                     "Scala",
+                     "Scheme",
+                     "爱情是我的",
+                     "爱琴海"
+                 ];
+                 $("#input").autocomplete({
+                     source: availableTags,
+                     position:{
+                         my:"left-10 top+10"
+                     }
+                 });
+             });
+      </script>
 </body>
 </html>

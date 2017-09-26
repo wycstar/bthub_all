@@ -35,7 +35,7 @@ TYPE_KEYS = [
 
 
 def get_file_type(l):
-    t = [0 for x in range(7)]
+    t = [0 for _ in range(7)]
     for x in l:
         n = os.path.splitext(x.get('n').lower())[1][1:]
         if n != '':

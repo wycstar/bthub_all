@@ -1,15 +1,17 @@
 #wx-overlay{
+    display: none;
     background: #000000;
     bottom: 0;
     left: 0;
     position: fixed;
     right: 0;
     top: 0;
-    z-index: 0;
-    opacity: 0.0;
+    z-index: 99999;
+    opacity: 0.5;
 }
 
 #wx-share{
+    display: none;
     position: fixed;
     width: 300px;
     height: 400px;
@@ -18,8 +20,7 @@
     left: 50%;
     margin-left: -150px;
     margin-top: -200px;
-    z-index: 0;
-    opacity: 0;
+    z-index: 100000;
 }
 
 .ws-header{
@@ -66,7 +67,6 @@
     margin-left: -250px;
     margin-top: -250px;
     z-index: 100000;
-    /*opacity: 1.0;*/
     display: none;
 }
 
@@ -149,6 +149,7 @@
 .df-amount{
     margin-top: 25px;
     text-align: center;
+    -moz-user-select: none;
 }
 
 .df-amount-wrap{

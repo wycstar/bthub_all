@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>{{ name[:40] }} - 结果详情 - BTHUB</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="/static/img/favicon.ico" />
     <link rel="stylesheet" type="text/css" href={{url_for('static', filename="css/public.css")}}>
     <link rel="stylesheet" type="text/css" href={{url_for('static', filename="css/footer.css")}}>
     <link rel="stylesheet" type="text/css" href={{url_for('static', filename="css/detail.css")}}>
@@ -26,9 +27,9 @@
             </div>
         </div>
     </div>
-    <div id="donate">
+    <div id="donate" onselectstart="return false;">
         <div class="donate-avatar">
-            <a onclick=""><i class="fa fa-times" aria-hidden="true"></i></a>
+            <a onclick="closeDonateWindow()"><i class="fa fa-times" aria-hidden="true"></i></a>
             <img src={{url_for('static', filename="img/beg.png")}}/>
         </div>
         <div class="donate-header-text">
@@ -38,16 +39,16 @@
         </div>
         <div class="df-wrapper">
             <div class="df-qrcode">
-                <img src={{url_for('static', filename="img/pay/wx-2.png")}} width="200" height="200">
+                <img src={{url_for('static', filename="img/pay/wx-2.png")}} width="200" height="200" id="donate-qrcode">
             </div>
             <div class="df-method clearfix">
                 <div class="df-method-wx fl">
-                    <input class="magic-radio" type="radio" name="radio" id="pay-method-wx" value="option1">
+                    <input class="magic-radio" type="radio" name="radio" id="pay-method-wx" value="wx-pay" checked="checked" onchange="donateMethod(this)">
                     <label for="pay-method-wx">&nbsp</label>
                     <img src={{url_for('static', filename="img/pay/wx-pay.png")}} />
                 </div>
                 <div class="df-method-ali fr">
-                    <input class="magic-radio" type="radio" name="radio" id="pay-method-ali" value="option1">
+                    <input class="magic-radio" type="radio" name="radio" id="pay-method-ali" value="ali-pay" onchange="donateMethod(this)">
                     <label for="pay-method-ali">&nbsp</label>
                     <img src={{url_for('static', filename="img/pay/ali-pay.png")}} />
                 </div>
@@ -55,13 +56,13 @@
             <div class="df-amount">
                 <span class="df-amount-wrap">
                     <span class="df-amount-l">
-                        <a><i class="fa fa-caret-left" aria-hidden="true"></i></a>
+                        <a onclick="donateRoll(1)"><i class="fa fa-caret-left" aria-hidden="true"></i></a>
                     </span>
                     <span class="df-amount-n">
-                        <i class="fa fa-jpy" aria-hidden="true"></i>2
+                        <i class="fa fa-jpy" aria-hidden="true"></i><span id="dfs">2</span>
                     </span>
                     <span class="df-amount-r">
-                        <a><i class="fa fa-caret-right" aria-hidden="true"></i></i></a>
+                        <a onclick="donateRoll(0)"><i class="fa fa-caret-right" aria-hidden="true"></i></a>
                     </span>
                 </span>
             </div>

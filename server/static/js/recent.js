@@ -22,7 +22,7 @@ let fresh = new Vue({
     }
 });
 
-let socket = io('fycx.mynetgear.com:28000');
+let socket = io('https://www.bthub.me');
 socket.on('update', function (message) {
     fresh.refresh(message);
     console.log(message)

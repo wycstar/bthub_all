@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>{{ keyword }}的搜索结果 - BTHUB</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="/static/img/favicon.ico" />
     <link rel="stylesheet" type="text/css" href={{url_for('static', filename="css/public.css")}}>
     <link rel="stylesheet" type="text/css" href={{url_for('static', filename="css/footer.css")}}>
     <link rel="stylesheet" type="text/css" href={{url_for('static', filename="css/result.css")}}>
@@ -38,9 +39,9 @@
         {% macro show_sort(name, t) %}
             {% if sort_type == t %}
                 {% if sort_order == "asc" %}
-                <a href={{ "/s/" ~ keyword ~ "/" ~ current_page ~ "?sort=" ~ t ~"&order=desc" }} class="type-selection-selected">流行度</a>
+                <a href={{ "/s/" ~ keyword ~ "/" ~ current_page ~ "?sort=" ~ t ~"&order=desc" }} class="type-selection-selected">{{ name }}</a>
                 {% else %}
-                <a href={{ "/s/" ~ keyword ~ "/" ~ current_page ~ "?sort=" ~ t ~"&order=asc" }} class="type-selection-selected">流行度</a>
+                <a href={{ "/s/" ~ keyword ~ "/" ~ current_page ~ "?sort=" ~ t ~"&order=asc" }} class="type-selection-selected">{{ name }}</a>
             {% endif %}
             {% else %}
             <a href={{ "/s/" ~ keyword ~ "/" ~ current_page ~ "?sort=" ~ t ~"&order=asc" }}>{{ name }}</a>

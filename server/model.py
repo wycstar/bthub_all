@@ -7,6 +7,9 @@ import os
 import sys
 from tools import convert_readable_size
 from db import REDIS
+from zhon import hanzi
+import string
+import re
 
 '''
 type:
@@ -51,15 +54,8 @@ class SearchManager(object):
 
     @staticmethod
     def analyze(text):
-        search_format = {
-            "analyzer": "ik_smart",
-            "text": text
-        }
-        r = requests.post('http://localhost:9200/_analyze',
-                          data=json.dumps(search_format),
-                          headers={'Content-type': 'application/json'}).content
-        d = json.loads(r)
-        return sorted(map(lambda x: x.get('token'), d.get('tokens')), key=lambda k: len(k))
+        ps = hanzi.punctuation + string.punctuation
+        return re.sub(ur"[%s]+" % ps, " ", text).split()
 
     def search(self, keyword, page, sort=0, order=0):
         k = []

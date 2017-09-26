@@ -14,6 +14,9 @@ class Config(object):
     WTF_CSRF_SECRET_KEY = 'acf1235'
     WTF_CSRF_ENABLED = True
     DOMAIN = c['domain']
+    COMPRESS_MIMETYPES = ['text/html', 'text/css', 'text/xml', 'application/json', 'application/javascript']
+    COMPRESS_LEVEL = 6
+    COMPRESS_MIN_SIZE = 500
 
 
 class OnlineConfig(Config):

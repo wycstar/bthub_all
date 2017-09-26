@@ -19,7 +19,7 @@ def index():
 @SITE.route('/s/<keyword>/<int:page_num>', methods=['GET', 'POST'])
 def search_result(keyword, page_num):
     query_form = TextQueryInput()
-    r = ELASTIC.search(keyword, page_num, request.args.get('sort'), request.args.get('order'))
+    r = ELASTIC.search(keyword.replace('+', ' '), page_num, request.args.get('sort'), request.args.get('order'))
     if query_form.validate_on_submit():
         return redirect(url_for('search_result', keyword=query_form.keyword.data.replace(' ', '+'), page_num=1))
     return render_template('result.html',
@@ -39,7 +39,7 @@ def result_detail(h):
     # 测试热度绘图
     import random
     import datetime
-    p = [random.randint(0, 10) for x in range(14)]
+    p = [random.randint(0, 10) for _ in range(14)]
     # 测试完毕
     if query_form.validate_on_submit():
         return redirect(url_for('search_result', keyword=query_form.keyword.data, page_num=1))
@@ -56,19 +56,19 @@ def result_detail(h):
                            vote=r.get('g'))
 
 
-@SERVER.on('message')
+@SERVER.on('message', namespace='/push')
 def handle_message(message):
     print message
 
 
-@SERVER.on('like')
+@SERVER.on('like', namespace='/push')
 def handle_like(message):
     print 'like {0}'.format(message)
     if re.search(r'^[0-9a-fA-F]+$', message) and len(message) == 40:
         MONGO.like(message)
 
 
-@SERVER.on('unlike')
+@SERVER.on('unlike', namespace='/push')
 def handle_like(message):
     print 'unlike {0}'.format(message)
     if re.search(r'^[0-9a-fA-F]+$', message) and len(message) == 40:

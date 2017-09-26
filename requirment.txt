@@ -9,3 +9,4 @@ flask==0.12.2
 flask_wtf==0.14.2
 apscheduler
 mongo-connector[elastic5]
+zhon
